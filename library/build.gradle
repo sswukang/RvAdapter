@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-group='com.github.sswukang'
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.sswukang'
 
 android {
     compileSdkVersion 25
@@ -30,4 +31,36 @@ dependencies {
     provided 'com.android.support:appcompat-v7:25.1.1'
     provided 'com.android.support:design:25.1.1'
     testCompile 'junit:junit:4.12'
+}
+
+
+/*--------------------- 增加注释文档 ------------------------*/
+
+// 指定编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// 打包源码
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// 制作文档(Javadoc)
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
