@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.sswukang'
 
@@ -33,8 +34,35 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+// Bintray
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    //获取local.propertes的信息
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    publish = true
+    configurations = ['archives']
+    pkg {
+        //填入 bintray 上对应的 package 信息
+        repo = 'maven'
+        name = 'RvAdapter'
+        vcsUrl = 'https://github.com/sswukang/RvAdapter.git'
+        websiteUrl = 'https://github.com/sswukang/RvAdapter'
+        licenses = ['Apache-2.0']
+        issueTrackerUrl = 'https://github.com/sswukang/RvAdapter/issues'
+        publicDownloadNumbers = true
+        version {
+            name = '1.0'
+            desc = '1.0 release'
+            released = new Date()
+            vcsTag = '1.3.0'
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+}
 
-/*--------------------- 增加注释文档 ------------------------*/
+/*--------------------- 增加注释文档(jitpack.io) ------------------------*/
 // build a jar with source files
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -42,7 +70,7 @@ task sourcesJar(type: Jar) {
 }
 
 task javadoc(type: Javadoc) {
-    failOnError  false
+    failOnError false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile
@@ -59,11 +87,10 @@ artifacts {
     archives javadocJar
 }
 
-// uncomment to build a jar file in addition to the default aar file
-//android.libraryVariants.all { variant ->
-//    def name = variant.buildType.name
-//    def task = project.tasks.create "jar${name.capitalize()}", Jar
-//    task.dependsOn variant.javaCompile
-//    task.from variant.javaCompile.destinationDir
-//    artifacts.add('archives', task);
-//}
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+task findConventions << {
+    println project.getConvention()
+}
