@@ -41,16 +41,6 @@ bintray {
     //获取local.propertes的信息
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
-
-    configurations = ['deployables'] //When uploading configuration files
-    // - OR -
-    publications = ['mavenStuff'] //When uploading Maven-based publication files
-    // - AND/OR -
-    filesSpec { //When uploading any arbitrary files ('filesSpec' is a standard Gradle CopySpec)
-        from 'arbitrary-files'
-        into 'standalone_files/level1'
-        rename '(.+)\\.(.+)', '$1-suffix.$2'
-    }
     dryRun = false //[Default: false] Whether to run this as dry-run, without deploying
     publish = true //[Default: false] Whether version should be auto published after an upload
     override = false //[Default: false] Whether to override version artifacts already published
