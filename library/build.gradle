@@ -49,7 +49,7 @@ bintray {
         //填入 bintray 上对应的 package 信息
         repo = 'maven'
         name = 'RvAdapter'
-        userOrg = 'wu-kang'
+        userOrg = 'sswukang'
         //An optional organization name when the repo belongs to one of the user's orgs
         desc = 'what a fantastic package indeed!'
         websiteUrl = 'https://github.com/sswukang/RvAdapter'
