@@ -11,7 +11,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0.1"
+        versionName version
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -46,7 +46,8 @@ install {
                 groupId 'cn.sswukang.library' //自己定义的组名
                 artifactId 'RvAdapter'
                 // Add your description here
-                name 'Some RecyclerView Adapter'     //项目描述
+                name 'cn.sswukang.library:RvAdapter'
+                description = 'Some RecyclerView Adapter'   //项目描述
                 url siteUrl
                 // Set your license
                 licenses {
