@@ -36,17 +36,16 @@ dependencies {
 
 def siteUrl = 'https://github.com/sswukang/RvAdapter'  // 项目的主页
 def gitUrl = 'git@github.com:sswukang/RvAdapter.git'   // Git仓库的url
-group = 'cn.sswukang.library'                          // Maven Group ID for the artifact，一般填你唯一的包名
+group = 'cn.sswukang.rvadapter'                          // Maven Group ID for the artifact，一般填你唯一的包名
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
         pom {
             project {
                 packaging 'aar'
-                groupId 'cn.sswukang.library' //自己定义的组名
-                artifactId 'RvAdapter'
+//                groupId 'cn.sswukang.common' //自己定义的组名
+//                artifactId 'RvAdapter'
                 // Add your description here
-                name 'cn.sswukang.library:RvAdapter'
                 description = 'Some RecyclerView Adapter'   //项目描述
                 url siteUrl
                 // Set your license

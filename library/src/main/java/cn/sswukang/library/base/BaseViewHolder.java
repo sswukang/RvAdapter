@@ -100,7 +100,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
     }
 
     /**
-     * 获得item布局资源id
+     * 获得item布局资源id（可用于multi adapter里区别不同item）
      *
      * @return item view res id
      */
@@ -110,7 +110,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
     }
 
     /**
-     * 获得item类型（用于multi）
+     * 获得item类型（可用于multi adapter里区别不同item）
      *
      * @return item view type
      */
