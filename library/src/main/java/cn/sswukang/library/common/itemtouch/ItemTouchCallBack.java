@@ -1,4 +1,4 @@
-package cn.sswukang.library.common.single;
+package cn.sswukang.library.common.itemtouch;
 
 import android.graphics.Canvas;
 import android.support.v7.widget.GridLayoutManager;

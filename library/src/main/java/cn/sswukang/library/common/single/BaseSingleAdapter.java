@@ -1,4 +1,4 @@
-package cn.sswukang.library.common.base;
+package cn.sswukang.library.common.single;
 
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
@@ -29,11 +29,6 @@ public abstract class BaseSingleAdapter<T, H extends BaseViewHolder> extends Rec
         this.layoutId = layoutId;
         this.data = data;
         setHasStableIds(true);
-    }
-
-    // 获得layoutId
-    protected int getLayoutId() {
-        return layoutId;
     }
 
     public List<T> getData() {
@@ -76,43 +71,50 @@ public abstract class BaseSingleAdapter<T, H extends BaseViewHolder> extends Rec
             return super.getItemId(position);
     }
 
+    /**
+     * 利用getItemViewType传递layout id
+     *
+     * @param position 当前行数
+     * @return layout id
+     */
+    @LayoutRes
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        return layoutId;
     }
 
     // 创建hold
     @SuppressWarnings("unchecked")
     @Override
-    public H onCreateViewHolder(ViewGroup parent, int viewType) {
-        return (H) H.get(LayoutInflater.from(parent.getContext())
-                .inflate(getLayoutId(), parent, false), getLayoutId(), viewType, this);
+    public H onCreateViewHolder(ViewGroup parent, @LayoutRes int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View root = inflater.inflate(viewType, parent, false);
+        return (H) H.get(root, viewType, this);
     }
 
     // 绑定hold
     @Override
     public void onBindViewHolder(H holder, int position) {
-        convert(holder, getItem(position), position);
+        convert(holder, getItem(position));
     }
 
     /**
      * 实现该抽象方法，完成数据的填充。
      *
-     * @param holder   {@link H}
-     * @param t        每个 position 对应的封装
-     * @param position 当前行数，采用{@link H#getLayoutPosition()}
+     * @param holder {@link H}
+     * @param t      每个 position 对应的封装
      */
-    public abstract void convert(H holder, T t, int position);
+    public abstract void convert(H holder, T t);
 
     /**
      * 单击事件
      *
      * @param itemView 点击的item {@link H#itemView}
      * @param position 当前行数，采用{@link H#getLayoutPosition()}
-     * @param viewType itemView的类型{@link #getItemViewType(int)}
+     * @param layoutId item布局id{@link H#getLayoutId()}
      */
     @Override
-    public void onItemClick(View itemView, int position, int viewType) {
+    public void onItemClick(View itemView, int position, @LayoutRes int layoutId) {
     }
 
     /**
@@ -120,11 +122,11 @@ public abstract class BaseSingleAdapter<T, H extends BaseViewHolder> extends Rec
      *
      * @param itemView 点击的item {@link H#itemView}
      * @param position 当前行数，采用{@link H#getLayoutPosition()}
-     * @param viewType itemView的类型{@link #getItemViewType(int)}
+     * @param layoutId item布局id{@link H#getLayoutId()}
      * @return 是否消费事件
      */
     @Override
-    public boolean onItemLongClick(View itemView, int position, int viewType) {
+    public boolean onItemLongClick(View itemView, int position, @LayoutRes int layoutId) {
         return false;
     }
 }

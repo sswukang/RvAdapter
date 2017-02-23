@@ -1,10 +1,10 @@
-package cn.sswukang.library.common.single;
+package cn.sswukang.library.common.itemtouch;
 
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import cn.sswukang.library.common.base.BaseViewHolder;
+import cn.sswukang.library.common.single.BaseViewHolder;
 
 
 /**
@@ -17,9 +17,9 @@ public class ItemTouchViewHolder extends BaseViewHolder implements ItemTouchCall
 
     private ItemViewStateChangeListener listener;
 
-    private ItemTouchViewHolder(View root, @LayoutRes int layoutId, int viewType,
-                                RecyclerClickListener clickListener, ItemViewStateChangeListener listener) {
-        super(root, layoutId, viewType, clickListener);
+    private ItemTouchViewHolder(View root, @LayoutRes int layoutId, RecyclerClickListener clickListener,
+                                ItemViewStateChangeListener listener) {
+        super(root, layoutId, clickListener);
         this.listener = listener;
     }
 
@@ -28,15 +28,14 @@ public class ItemTouchViewHolder extends BaseViewHolder implements ItemTouchCall
      *
      * @param root          每一个条目的根view。{@link RecyclerView.ViewHolder#itemView}
      * @param layoutId      该条目的layout id，常用于多条目的区分
-     * @param viewType      该条目的类型，常用于多条目的区分
      * @param clickListener {@link RecyclerClickListener}
      * @param listener      {@link ItemViewStateChangeListener}
      * @return {@link ItemTouchViewHolder}
      */
-    public static ItemTouchViewHolder get(View root, @LayoutRes int layoutId, int viewType,
+    public static ItemTouchViewHolder get(View root, @LayoutRes int layoutId,
                                           RecyclerClickListener clickListener,
                                           ItemViewStateChangeListener listener) {
-        return new ItemTouchViewHolder(root, layoutId, viewType, clickListener, listener);
+        return new ItemTouchViewHolder(root, layoutId, clickListener, listener);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package cn.sswukang.library.common.base;
+package cn.sswukang.library.common.single;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -29,15 +29,12 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
     private final SparseArray<View> views;
     @LayoutRes
     private int layoutId;
-    private int viewType;
     private RecyclerClickListener listener;
 
-    protected BaseViewHolder(View root, @LayoutRes int layoutId, int viewType,
-                             RecyclerClickListener listener) {
+    protected BaseViewHolder(View root, @LayoutRes int layoutId, RecyclerClickListener listener) {
         super(root);
         this.views = new SparseArray<>();
         this.layoutId = layoutId;
-        this.viewType = viewType;
         this.listener = listener;
 
         //添加监听事件
@@ -49,14 +46,12 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
      * 自定义ViewHolder创建方法
      *
      * @param root     每一个条目的根view。{@link RecyclerView.ViewHolder#itemView}
-     * @param layoutId 该条目的layout id，常用于多条目的区分
-     * @param viewType 该条目的类型，常用于多条目的区分
+     * @param layoutId 该条目的layout id，可用于多条目的区分
      * @param listener 条目的监听
      * @return {@link BaseViewHolder}
      */
-    public static BaseViewHolder get(View root, @LayoutRes int layoutId, int viewType,
-                                     RecyclerClickListener listener) {
-        return new BaseViewHolder(root, layoutId, viewType, listener);
+    public static BaseViewHolder get(View root, @LayoutRes int layoutId, RecyclerClickListener listener) {
+        return new BaseViewHolder(root, layoutId, listener);
     }
 
     /**
@@ -82,12 +77,12 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
 
     @Override
     public void onClick(View v) {
-        listener.onItemClick(v, getLayoutPosition(), getViewType());
+        listener.onItemClick(v, getLayoutPosition(), getLayoutId());
     }
 
     @Override
     public boolean onLongClick(View v) {
-        return listener.onItemLongClick(v, getLayoutPosition(), getViewType());
+        return listener.onItemLongClick(v, getLayoutPosition(), getLayoutId());
     }
 
     /**
@@ -107,15 +102,6 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
     @LayoutRes
     public int getLayoutId() {
         return layoutId;
-    }
-
-    /**
-     * 获得item类型（可用于multi adapter里区别不同item）
-     *
-     * @return item view type
-     */
-    public int getViewType() {
-        return viewType;
     }
 
     /**
@@ -231,11 +217,11 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
         /**
          * item 单击事件
          */
-        void onItemClick(View v, int position, int viewType);
+        void onItemClick(View v, int position, @LayoutRes int layoutId);
 
         /**
          * item 长按事件
          */
-        boolean onItemLongClick(View v, int position, int viewType);
+        boolean onItemLongClick(View v, int position, @LayoutRes int layoutId);
     }
 }

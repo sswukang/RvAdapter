@@ -10,6 +10,7 @@
     <JAVADOC />
     <SOURCES>
       <root url="jar://E:/Android/sdk/extras/android/m2repository/com/android/support/support-fragment/25.2.0/support-fragment-25.2.0-sources.jar!/" />
+      <root url="jar://E:/Android/sdk/extras/android/m2repository/com/android/support/support-fragment/25.2.0/support-fragment-25.2.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

@@ -5,9 +5,6 @@ import android.view.View;
 
 import java.util.List;
 
-import cn.sswukang.library.common.base.BaseSingleAdapter;
-import cn.sswukang.library.common.base.BaseViewHolder;
-
 
 /**
  * 单item通用Adapter
@@ -26,12 +23,12 @@ public abstract class CommonSingleAdapter<T> extends BaseSingleAdapter<T, BaseVi
 
     @Override
     public final void onItemClick(View itemView, int position, int viewType) {
-        onItemClick(itemView, getItem(position), position);
+        onItemClick(itemView, getItem(position));
     }
 
     @Override
     public final boolean onItemLongClick(View itemView, int position, int viewType) {
-        return onItemLongClick(itemView, getItem(position), position);
+        return onItemLongClick(itemView, getItem(position));
     }
 
     /**
@@ -39,9 +36,8 @@ public abstract class CommonSingleAdapter<T> extends BaseSingleAdapter<T, BaseVi
      *
      * @param itemView 点击的item {@link BaseViewHolder#itemView}
      * @param t        每个 position 对应的封装
-     * @param position 当前行数，采用{@link BaseViewHolder#getLayoutPosition()}
      */
-    public void onItemClick(View itemView, T t, int position) {
+    public void onItemClick(View itemView, T t) {
         // do something...
     }
 
@@ -50,10 +46,9 @@ public abstract class CommonSingleAdapter<T> extends BaseSingleAdapter<T, BaseVi
      *
      * @param itemView 点击的item {@link BaseViewHolder#itemView}
      * @param t        每个 position 对应的封装
-     * @param position 当前行数，采用{@link BaseViewHolder#getLayoutPosition()}
      * @return 长按事件是否被消费
      */
-    public boolean onItemLongClick(View itemView, T t, int position) {
+    public boolean onItemLongClick(View itemView, T t) {
         return false;
     }
 }

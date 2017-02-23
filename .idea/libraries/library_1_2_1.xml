@@ -7,6 +7,7 @@
     <JAVADOC />
     <SOURCES>
       <root url="jar://E:/Android/sdk/extras/android/m2repository/com/android/databinding/library/1.2.1/library-1.2.1-sources.jar!/" />
+      <root url="jar://E:/Android/sdk/extras/android/m2repository/com/android/databinding/library/1.2.1/library-1.2.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

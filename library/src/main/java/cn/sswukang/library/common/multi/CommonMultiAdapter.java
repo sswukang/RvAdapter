@@ -1,11 +1,11 @@
 package cn.sswukang.library.common.multi;
 
+import android.support.annotation.LayoutRes;
 import android.view.View;
 
 import java.util.List;
 
-import cn.sswukang.library.common.base.BaseMultiAdapter;
-import cn.sswukang.library.common.base.BaseViewHolder;
+import cn.sswukang.library.common.single.BaseViewHolder;
 
 
 /**
@@ -16,21 +16,20 @@ import cn.sswukang.library.common.base.BaseViewHolder;
  */
 public abstract class CommonMultiAdapter<T> extends BaseMultiAdapter<T, BaseViewHolder> {
     /**
-     * @param data                 数据
-     * @param multiItemTypeSupport 多布局支持接口
+     * @param data 数据
      */
-    public CommonMultiAdapter(List<T> data, MultiItemTypeSupport<T> multiItemTypeSupport) {
-        super(data, multiItemTypeSupport);
+    public CommonMultiAdapter(List<T> data) {
+        super(data);
     }
 
     @Override
-    public final void onItemClick(View itemView, int position, int viewType) {
-        onItemClick(itemView, getItem(position), viewType);
+    public final void onItemClick(View itemView, int position, @LayoutRes int layoutId) {
+        onItemClick(itemView, getItem(position), layoutId);
     }
 
     @Override
-    public final boolean onItemLongClick(View itemView, int position, int viewType) {
-        return onItemLongClick(itemView, getItem(position), viewType);
+    public final boolean onItemLongClick(View itemView, int position, @LayoutRes int layoutId) {
+        return onItemLongClick(itemView, getItem(position), layoutId);
     }
 
     /**
@@ -38,9 +37,9 @@ public abstract class CommonMultiAdapter<T> extends BaseMultiAdapter<T, BaseView
      *
      * @param itemView 触发点击事件的View
      * @param t        每个 position 对应的封装
-     * @param viewType item类型{@link BaseViewHolder#getViewType()}
+     * @param layoutId item布局id{@link BaseViewHolder#getLayoutId()}
      */
-    public void onItemClick(View itemView, T t, int viewType) {
+    public void onItemClick(View itemView, T t, @LayoutRes int layoutId) {
         // do something...
     }
 
@@ -49,10 +48,10 @@ public abstract class CommonMultiAdapter<T> extends BaseMultiAdapter<T, BaseView
      *
      * @param itemView 触发点击事件的View
      * @param t        每个 position 对应的封装
-     * @param viewType item类型{@link BaseViewHolder#getViewType()}
+     * @param layoutId item布局id{@link BaseViewHolder#getLayoutId()}
      * @return 长按事件是否被消费
      */
-    public boolean onItemLongClick(View itemView, T t, int viewType) {
+    public boolean onItemLongClick(View itemView, T t, @LayoutRes int layoutId) {
         return false;
     }
 }

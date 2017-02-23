@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import cn.sswukang.library.common.base.BaseViewHolder;
+import cn.sswukang.library.common.single.BaseViewHolder;
 import cn.sswukang.library.common.single.CommonSingleAdapter;
 import cn.sswukang.library.lib.sticky_header.sticky.StickyRecyclerHeadersAdapter;
 
@@ -46,7 +46,7 @@ public abstract class StickyHeaderAdapter<T> extends CommonSingleAdapter<T>
     public final BaseViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
         View root = LayoutInflater.from(parent.getContext()).inflate(headerLayoutId, parent, false);
         this.headerHeight = root.getLayoutParams().height;
-        return BaseViewHolder.get(root, headerLayoutId, -1, this);
+        return BaseViewHolder.get(root, headerLayoutId, this);
     }
 
     @Override

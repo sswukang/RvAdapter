@@ -1,4 +1,4 @@
-package cn.sswukang.library.common.single;
+package cn.sswukang.library.common.itemtouch;
 
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
-import cn.sswukang.library.common.base.BaseSingleAdapter;
+import cn.sswukang.library.common.single.BaseSingleAdapter;
 
 
 /**
@@ -35,17 +35,17 @@ public abstract class ItemTouchAdapter<T> extends BaseSingleAdapter<T, ItemTouch
     @Override
     public final ItemTouchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return ItemTouchViewHolder.get(LayoutInflater.from(parent.getContext())
-                .inflate(getLayoutId(), parent, false), getLayoutId(), viewType, this, this);
+                .inflate(viewType, parent, false), viewType, this, this);
     }
 
     @Override
-    public final void onItemClick(View itemView, int position, int viewType) {
-        onItemClick(itemView, getItem(position), position);
+    public final void onItemClick(View itemView, int position, @LayoutRes int layoutId) {
+        onItemClick(itemView, getItem(position));
     }
 
     @Override
-    public final boolean onItemLongClick(View itemView, int position, int viewType) {
-        return onItemLongClick(itemView, getItem(position), position);
+    public final boolean onItemLongClick(View itemView, int position, @LayoutRes int layoutId) {
+        return onItemLongClick(itemView, getItem(position));
     }
 
     @Override
@@ -70,9 +70,8 @@ public abstract class ItemTouchAdapter<T> extends BaseSingleAdapter<T, ItemTouch
      *
      * @param itemView 点击的item {@link ItemTouchViewHolder#itemView}
      * @param t        每个 position 对应的封装
-     * @param position 当前行数，采用{@link ItemTouchViewHolder#getLayoutPosition()}
      */
-    public void onItemClick(View itemView, T t, int position) {
+    public void onItemClick(View itemView, T t) {
         // do something...
     }
 
@@ -81,10 +80,9 @@ public abstract class ItemTouchAdapter<T> extends BaseSingleAdapter<T, ItemTouch
      *
      * @param itemView 点击的item {@link ItemTouchViewHolder#itemView}
      * @param t        每个 position 对应的封装
-     * @param position 当前行数，采用{@link ItemTouchViewHolder#getLayoutPosition()}
      * @return 长按事件是否被消费
      */
-    public boolean onItemLongClick(View itemView, T t, int position) {
+    public boolean onItemLongClick(View itemView, T t) {
         return false;
     }
 
