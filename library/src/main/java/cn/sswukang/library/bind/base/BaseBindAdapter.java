@@ -1,5 +1,7 @@
-package cn.sswukang.library.common.base;
+package cn.sswukang.library.bind.base;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,13 +11,13 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * RecyclerView基础Adapter。
+ * RecyclerView基础Adapter。(DataBinding模式)
  *
- * @author sswukang on 2017/2/17 9:30
+ * @author sswukang on 2017/2/23 18:13
  * @version 1.0
  */
-public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerView.Adapter<H>
-        implements BaseViewHolder.RecyclerClickListener {
+public abstract class BaseBindAdapter<T, B extends ViewDataBinding, H extends BaseBindViewHolder<B>>
+        extends RecyclerView.Adapter<H> implements BaseBindViewHolder.RecyclerClickListener {
 
     @LayoutRes
     private int layoutId;
@@ -25,7 +27,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
      * @param layoutId adapter需要的布局资源id
      * @param data     数据
      */
-    public BaseAdapter(@LayoutRes int layoutId, List<T> data) {
+    public BaseBindAdapter(@LayoutRes int layoutId, List<T> data) {
         this.layoutId = layoutId;
         this.data = data;
         setHasStableIds(true);
@@ -88,23 +90,24 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     @Override
     public H onCreateViewHolder(ViewGroup parent, @LayoutRes int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View root = inflater.inflate(viewType, parent, false);
-        return (H) H.get(root, viewType, this);
+        B binding = DataBindingUtil.inflate(inflater, viewType, parent, false);
+        return (H) H.get(binding, viewType, this);
     }
 
     // 绑定hold
     @Override
     public void onBindViewHolder(H holder, int position) {
-        convert(getItem(position), holder);
+        convert(getItem(position), holder.getBinding(), holder);
     }
 
     /**
      * 实现该抽象方法，完成数据的填充。
      *
-     * @param t      每个 position 对应的封装
-     * @param holder {@link H}
+     * @param t       每个 position 对应的封装
+     * @param binding {@link B}
+     * @param holder  {@link H}
      */
-    public abstract void convert(T t, H holder);
+    public abstract void convert(T t, B binding, H holder);
 
     /**
      * 单击事件

@@ -1,25 +1,26 @@
-package cn.sswukang.library.common.sticky;
+package cn.sswukang.library.bind.sticky;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
-import cn.sswukang.library.common.base.BaseViewHolder;
-import cn.sswukang.library.common.single.SingleAdapter;
+import cn.sswukang.library.bind.base.BaseBindViewHolder;
+import cn.sswukang.library.bind.single.SingleBindAdapter;
 import cn.sswukang.library.lib.sticky_header.sticky.StickyRecyclerHeadersAdapter;
 
 
 /**
- * 粘性头部适配器。
+ * 粘性头部适配器。(DataBinding模式)
  *
- * @author sswukang on 2017/2/21 11:03
+ * @author sswukang on 2017/2/23 18:43
  * @version 1.0
  */
-public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
-        implements StickyRecyclerHeadersAdapter<BaseViewHolder> {
+public abstract class StickyHeaderBindAdapter<T, B extends ViewDataBinding> extends SingleBindAdapter<T, B>
+        implements StickyRecyclerHeadersAdapter<BaseBindViewHolder<B>> {
 
     // sticky header res id;
     @LayoutRes
@@ -32,7 +33,7 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
      * @param layoutId       content需要的布局资源id
      * @param data           数据
      */
-    public StickyHeaderAdapter(@LayoutRes int headerLayoutId, @LayoutRes int layoutId, List<T> data) {
+    public StickyHeaderBindAdapter(@LayoutRes int headerLayoutId, @LayoutRes int layoutId, List<T> data) {
         super(layoutId, data);
         this.headerLayoutId = headerLayoutId;
     }
@@ -42,15 +43,17 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
         return getHeaderId(getItem(position), position);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final BaseViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        View root = LayoutInflater.from(parent.getContext()).inflate(headerLayoutId, parent, false);
-        this.headerHeight = root.getLayoutParams().height;
-        return BaseViewHolder.get(root, headerLayoutId, this);
+    public final BaseBindViewHolder<B> onCreateHeaderViewHolder(ViewGroup parent) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        B binding = DataBindingUtil.inflate(inflater, headerLayoutId, parent, false);
+        this.headerHeight = binding.getRoot().getLayoutParams().height;
+        return BaseBindViewHolder.get(binding, headerLayoutId, this);
     }
 
     @Override
-    public final void onBindHeaderViewHolder(BaseViewHolder holder, int position) {
+    public final void onBindHeaderViewHolder(BaseBindViewHolder<B> holder, int position) {
         convertHeader(holder, getItem(position), position);
     }
 
@@ -69,7 +72,7 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
      * 例：字符串可以用 String.charAt(0)
      *
      * @param t        每个 position 对应的封装
-     * @param position 当前行数，采用{@link BaseViewHolder#getLayoutPosition()}
+     * @param position 当前行数，采用{@link BaseBindViewHolder<B>#getLayoutPosition()}
      * @return header id {@link StickyRecyclerHeadersAdapter#getHeaderId(int)}
      */
     public abstract long getHeaderId(T t, int position);
@@ -77,9 +80,9 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
     /**
      * 填充粘性头部显示的内容
      *
-     * @param holder   {@link BaseViewHolder}
+     * @param holder   {@link BaseBindViewHolder<B>}
      * @param t        相同header id 的第一个条目封装 {@link #getHeaderId(Object, int)}
      * @param position 相同header id 的第一个条目的position  {@link #getHeaderId(Object, int)}
      */
-    public abstract void convertHeader(BaseViewHolder holder, T t, int position);
+    public abstract void convertHeader(BaseBindViewHolder<B> holder, T t, int position);
 }

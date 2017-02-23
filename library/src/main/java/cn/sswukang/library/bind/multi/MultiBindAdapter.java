@@ -1,25 +1,26 @@
-package cn.sswukang.library.common.multi;
+package cn.sswukang.library.bind.multi;
 
+import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 
 import java.util.List;
 
-import cn.sswukang.library.common.base.BaseAdapter;
-import cn.sswukang.library.common.base.BaseViewHolder;
+import cn.sswukang.library.bind.base.BaseBindAdapter;
+import cn.sswukang.library.bind.base.BaseBindViewHolder;
 
 /**
- * multi Item Adapter。
+ * multi Item Adapter。(DataBinding模式)
  *
- * @author sswukang on 2017/2/17 11:05
+ * @author sswukang on 2017/2/23 18:35
  * @version 1.0
  */
-public abstract class MultiAdapter<T> extends BaseAdapter<T, BaseViewHolder> {
+public abstract class MultiBindAdapter<T, B extends ViewDataBinding> extends BaseBindAdapter<T, B, BaseBindViewHolder<B>> {
 
     /**
      * @param data 数据
      */
-    public MultiAdapter(List<T> data) {
+    public MultiBindAdapter(List<T> data) {
         super(-1, data);
     }
 
@@ -36,8 +37,8 @@ public abstract class MultiAdapter<T> extends BaseAdapter<T, BaseViewHolder> {
     }
 
     @Override
-    public final void convert(T t, BaseViewHolder holder) {
-        convert(t, holder, holder.getLayoutId());
+    public final void convert(T t, B binding, BaseBindViewHolder<B> holder) {
+        convert(t, binding, holder, holder.getLayoutId());
     }
 
     @Override
@@ -63,10 +64,11 @@ public abstract class MultiAdapter<T> extends BaseAdapter<T, BaseViewHolder> {
      * 实现该抽象方法，完成数据的填充。
      *
      * @param t        每个 position 对应的封装
-     * @param holder   {@link BaseViewHolder}
+     * @param binding  {@link B}
+     * @param holder   {@link BaseBindViewHolder<B>}
      * @param layoutId 布局id (用于区别不同item)
      */
-    public abstract void convert(T t, BaseViewHolder holder, @LayoutRes int layoutId);
+    public abstract void convert(T t, B binding, BaseBindViewHolder<B> holder, @LayoutRes int layoutId);
 
     /**
      * item的单击事件
