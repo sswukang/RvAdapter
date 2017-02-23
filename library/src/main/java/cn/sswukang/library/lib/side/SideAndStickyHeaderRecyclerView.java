@@ -18,7 +18,7 @@ import cn.sswukang.library.lib.sticky_header.sticky.StickyRecyclerHeadersDecorat
 /**
  * 选择条结合粘性头部的RecyclerView
  *
- * @author sswukang on 2017/1/17 17:39
+ * @author sswukang on 2017/2/22 15:39
  * @version 1.0
  */
 public class SideAndStickyHeaderRecyclerView extends FrameLayout {

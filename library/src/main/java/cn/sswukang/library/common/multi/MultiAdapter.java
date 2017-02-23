@@ -7,22 +7,21 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import cn.sswukang.library.common.single.BaseSingleAdapter;
-import cn.sswukang.library.common.single.BaseViewHolder;
-
+import cn.sswukang.library.common.base.BaseAdapter;
+import cn.sswukang.library.common.base.BaseViewHolder;
 
 /**
- * RecyclerView基础多Item Adapter。
+ * multi Item Adapter。
  *
- * @author sswukang on 2016/2/15 14:50
+ * @author sswukang on 2017/2/17 11:05
  * @version 1.0
  */
-public abstract class BaseMultiAdapter<T, H extends BaseViewHolder> extends BaseSingleAdapter<T, H> {
+public abstract class MultiAdapter<T, H extends BaseViewHolder> extends BaseAdapter<T, H> {
 
     /**
      * @param data 数据
      */
-    public BaseMultiAdapter(List<T> data) {
+    public MultiAdapter(List<T> data) {
         super(-1, data);
     }
 
@@ -52,6 +51,16 @@ public abstract class BaseMultiAdapter<T, H extends BaseViewHolder> extends Base
         convert(holder.getLayoutId(), holder, t);
     }
 
+    @Override
+    public final void onItemClick(View itemView, int position, @LayoutRes int layoutId) {
+        onItemClick(itemView, getItem(position), layoutId);
+    }
+
+    @Override
+    public final boolean onItemLongClick(View itemView, int position, @LayoutRes int layoutId) {
+        return onItemLongClick(itemView, getItem(position), layoutId);
+    }
+
     /**
      * 实现该抽象方法，得到单个item的layout id。
      *
@@ -69,4 +78,27 @@ public abstract class BaseMultiAdapter<T, H extends BaseViewHolder> extends Base
      * @param t        每个 position 对应的封装
      */
     public abstract void convert(@LayoutRes int layoutId, H holder, T t);
+
+    /**
+     * item的单击事件
+     *
+     * @param itemView 触发点击事件的View
+     * @param t        每个 position 对应的封装
+     * @param layoutId item布局id{@link BaseViewHolder#getLayoutId()}
+     */
+    public void onItemClick(View itemView, T t, @LayoutRes int layoutId) {
+        // do something...
+    }
+
+    /**
+     * item的长按事件
+     *
+     * @param itemView 触发点击事件的View
+     * @param t        每个 position 对应的封装
+     * @param layoutId item布局id{@link BaseViewHolder#getLayoutId()}
+     * @return 长按事件是否被消费
+     */
+    public boolean onItemLongClick(View itemView, T t, @LayoutRes int layoutId) {
+        return false;
+    }
 }

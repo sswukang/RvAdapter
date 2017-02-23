@@ -4,13 +4,13 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import cn.sswukang.library.common.single.BaseViewHolder;
+import cn.sswukang.library.common.base.BaseViewHolder;
 
 
 /**
  * 拖拽侧滑ViewHolder
  *
- * @author sswukang on 2016/11/24 11:54
+ * @author sswukang on 2017/2/20 10:14
  * @version 1.0
  */
 public class ItemTouchViewHolder extends BaseViewHolder implements ItemTouchCallBack.OnStateChangedListener {

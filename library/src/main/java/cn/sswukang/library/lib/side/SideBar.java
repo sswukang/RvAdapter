@@ -20,7 +20,7 @@ import cn.sswukang.library.R;
 
 /**
  * 选择条
- * update by sswukang on 1/17/2017 15:23
+ * update by sswukang on 2017/2/22 10:53
  *
  * @author gjz on 8/23/2016 17:37
  * @version 1.0

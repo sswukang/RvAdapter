@@ -5,29 +5,31 @@ import android.view.View;
 
 import java.util.List;
 
+import cn.sswukang.library.common.base.BaseAdapter;
+import cn.sswukang.library.common.base.BaseViewHolder;
 
 /**
- * 单item通用Adapter
+ * single item Adapter
  *
- * @author sswukang on 2016/10/10 9:33
+ * @author sswukang on 2017/2/17 10:33
  * @version 1.0
  */
-public abstract class CommonSingleAdapter<T> extends BaseSingleAdapter<T, BaseViewHolder> {
+public abstract class SingleAdapter<T> extends BaseAdapter<T, BaseViewHolder> {
     /**
      * @param layoutId adapter需要的布局资源id
      * @param data     数据
      */
-    protected CommonSingleAdapter(@LayoutRes int layoutId, List<T> data) {
+    protected SingleAdapter(@LayoutRes int layoutId, List<T> data) {
         super(layoutId, data);
     }
 
     @Override
-    public final void onItemClick(View itemView, int position, int viewType) {
+    public final void onItemClick(View itemView, int position, @LayoutRes int layoutId) {
         onItemClick(itemView, getItem(position));
     }
 
     @Override
-    public final boolean onItemLongClick(View itemView, int position, int viewType) {
+    public final boolean onItemLongClick(View itemView, int position, @LayoutRes int layoutId) {
         return onItemLongClick(itemView, getItem(position));
     }
 

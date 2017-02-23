@@ -1,4 +1,4 @@
-package cn.sswukang.library.common.single;
+package cn.sswukang.library.common.base;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -20,7 +20,7 @@ import android.widget.TextView;
 /**
  * 自定义 RecyclerView 的 ViewHolder
  *
- * @author sswukang on 2016/2/15 16:01
+ * @author sswukang on 2017/2/17 9:01
  * @version 1.0
  */
 public class BaseViewHolder extends RecyclerView.ViewHolder

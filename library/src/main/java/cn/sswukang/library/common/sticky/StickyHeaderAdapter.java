@@ -7,18 +7,18 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import cn.sswukang.library.common.single.BaseViewHolder;
-import cn.sswukang.library.common.single.CommonSingleAdapter;
+import cn.sswukang.library.common.base.BaseViewHolder;
+import cn.sswukang.library.common.single.SingleAdapter;
 import cn.sswukang.library.lib.sticky_header.sticky.StickyRecyclerHeadersAdapter;
 
 
 /**
  * 粘性头部适配器
  *
- * @author sswukang on 2016/11/22 10:03
+ * @author sswukang on 2017/2/21 11:03
  * @version 1.0
  */
-public abstract class StickyHeaderAdapter<T> extends CommonSingleAdapter<T>
+public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
         implements StickyRecyclerHeadersAdapter<BaseViewHolder> {
 
     // sticky header res id;

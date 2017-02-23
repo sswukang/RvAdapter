@@ -8,7 +8,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 /**
  * 拖拽侧滑CallBack
  *
- * @author sswukang on 2016/11/24 11:25
+ * @author sswukang on 2017/2/20 14:25
  * @version 1.0
  */
 public class ItemTouchCallBack extends ItemTouchHelper.Callback {

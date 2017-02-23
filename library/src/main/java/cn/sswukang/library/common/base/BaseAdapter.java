@@ -1,4 +1,4 @@
-package cn.sswukang.library.common.single;
+package cn.sswukang.library.common.base;
 
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * RecyclerView基础单Item Adapter。
+ * RecyclerView基础Adapter。
  *
- * @author sswukang on 2016/2/15 14:30
+ * @author sswukang on 2017/2/17 9:30
  * @version 1.0
  */
-public abstract class BaseSingleAdapter<T, H extends BaseViewHolder> extends RecyclerView.Adapter<H>
+public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerView.Adapter<H>
         implements BaseViewHolder.RecyclerClickListener {
 
     @LayoutRes
@@ -25,7 +25,7 @@ public abstract class BaseSingleAdapter<T, H extends BaseViewHolder> extends Rec
      * @param layoutId adapter需要的布局资源id
      * @param data     数据
      */
-    public BaseSingleAdapter(@LayoutRes int layoutId, List<T> data) {
+    public BaseAdapter(@LayoutRes int layoutId, List<T> data) {
         this.layoutId = layoutId;
         this.data = data;
         setHasStableIds(true);

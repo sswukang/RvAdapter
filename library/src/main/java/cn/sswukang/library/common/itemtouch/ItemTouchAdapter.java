@@ -9,20 +9,20 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
-import cn.sswukang.library.common.single.BaseSingleAdapter;
+import cn.sswukang.library.common.base.BaseAdapter;
 
 
 /**
- * 单item {@link android.support.v7.widget.helper.ItemTouchHelper}实现Adapter
+ * {@link android.support.v7.widget.helper.ItemTouchHelper} Adapter
  * example:{
  * ☞ ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchCallBack(adapter));
  * ☞ touchHelper.attachToRecyclerView(recyclerView);
  * }
  *
- * @author sswukang on 2016/11/24 11:36
+ * @author sswukang on 2017/2/20 15:36
  * @version 1.0
  */
-public abstract class ItemTouchAdapter<T> extends BaseSingleAdapter<T, ItemTouchViewHolder>
+public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHolder>
         implements ItemTouchCallBack.OnMoveSwipeListener, ItemTouchViewHolder.ItemViewStateChangeListener {
     /**
      * @param layoutId adapter需要的布局资源id
