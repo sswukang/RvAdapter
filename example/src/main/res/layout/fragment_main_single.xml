@@ -1,0 +1,19 @@
+<layout>
+
+    <data class="MainSingleFragmentBinding">
+
+        <variable
+            name="mainSingle"
+            type="cn.sswukang.example.viewmodel.MainSingelViewModel" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/single_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+</layout>

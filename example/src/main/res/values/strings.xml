@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Example</string>
+    <string name="none">None Data</string>
+    <string name="main_single">Single</string>
+    <string name="main_multi">Multi</string>
+    <string name="main_sticky">Sticky</string>
+    <string name="main_sticky_side">Sticky &amp; Side</string>
+    <string name="main_asc">Asc</string>
+    <string name="main_desc">Desc</string>
+    <string name="main_shuffle">Shuffle</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
