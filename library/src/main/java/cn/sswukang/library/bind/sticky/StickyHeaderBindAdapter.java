@@ -54,7 +54,7 @@ public abstract class StickyHeaderBindAdapter<T, B extends ViewDataBinding> exte
 
     @Override
     public final void onBindHeaderViewHolder(BaseBindViewHolder<B> holder, int position) {
-        convertHeader(holder, getItem(position), position);
+        convertHeader(getItem(position), holder.getBinding(), holder, position);
     }
 
     /**
@@ -72,7 +72,7 @@ public abstract class StickyHeaderBindAdapter<T, B extends ViewDataBinding> exte
      * 例：字符串可以用 String.charAt(0)
      *
      * @param t        每个 position 对应的封装
-     * @param position 当前行数，采用{@link BaseBindViewHolder<B>#getLayoutPosition()}
+     * @param position 当前行数
      * @return header id {@link StickyRecyclerHeadersAdapter#getHeaderId(int)}
      */
     public abstract long getHeaderId(T t, int position);
@@ -80,9 +80,10 @@ public abstract class StickyHeaderBindAdapter<T, B extends ViewDataBinding> exte
     /**
      * 填充粘性头部显示的内容
      *
+     * @param t        header 对象数据封装
+     * @param binding  {@link B}
      * @param holder   {@link BaseBindViewHolder<B>}
-     * @param t        相同header id 的第一个条目封装 {@link #getHeaderId(Object, int)}
-     * @param position 相同header id 的第一个条目的position  {@link #getHeaderId(Object, int)}
+     * @param position header 条目下标
      */
-    public abstract void convertHeader(BaseBindViewHolder<B> holder, T t, int position);
+    public abstract void convertHeader(T t, B binding, BaseBindViewHolder<B> holder, int position);
 }

@@ -8,7 +8,7 @@ import cn.sswukang.library.common.base.BaseViewHolder;
 
 
 /**
- * 拖拽侧滑ViewHolder
+ * 拖拽侧滑ViewHolder。
  *
  * @author sswukang on 2017/2/20 10:14
  * @version 1.0

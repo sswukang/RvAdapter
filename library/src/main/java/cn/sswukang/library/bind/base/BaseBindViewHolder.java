@@ -40,14 +40,14 @@ public class BaseBindViewHolder<B extends ViewDataBinding> extends RecyclerView.
     /**
      * 自定义ViewHolder创建方法
      *
-     * @param binding  每一个条目的根view。{@link RecyclerView.ViewHolder#itemView}
+     * @param binding  {@link B}
      * @param layoutId 该条目的layout id，可用于多条目的区分
      * @param listener 条目的监听
      * @return {@link BaseBindViewHolder}
      */
     @SuppressWarnings("unchecked")
-    public static <B extends ViewDataBinding> BaseBindViewHolder get(B binding, @LayoutRes int layoutId,
-                                                                     RecyclerClickListener listener) {
+    public static <B extends ViewDataBinding> BaseBindViewHolder get(
+            B binding, @LayoutRes int layoutId, RecyclerClickListener listener) {
         return new BaseBindViewHolder(binding, layoutId, listener);
     }
 

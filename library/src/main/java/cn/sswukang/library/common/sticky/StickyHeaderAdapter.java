@@ -44,14 +44,15 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
 
     @Override
     public final BaseViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        View root = LayoutInflater.from(parent.getContext()).inflate(headerLayoutId, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View root = inflater.inflate(headerLayoutId, parent, false);
         this.headerHeight = root.getLayoutParams().height;
         return BaseViewHolder.get(root, headerLayoutId, this);
     }
 
     @Override
     public final void onBindHeaderViewHolder(BaseViewHolder holder, int position) {
-        convertHeader(holder, getItem(position), position);
+        convertHeader(getItem(position), holder, position);
     }
 
     /**
@@ -69,7 +70,7 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
      * 例：字符串可以用 String.charAt(0)
      *
      * @param t        每个 position 对应的封装
-     * @param position 当前行数，采用{@link BaseViewHolder#getLayoutPosition()}
+     * @param position 当前行数
      * @return header id {@link StickyRecyclerHeadersAdapter#getHeaderId(int)}
      */
     public abstract long getHeaderId(T t, int position);
@@ -77,9 +78,9 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
     /**
      * 填充粘性头部显示的内容
      *
+     * @param t        header 对象数据封装
      * @param holder   {@link BaseViewHolder}
-     * @param t        相同header id 的第一个条目封装 {@link #getHeaderId(Object, int)}
-     * @param position 相同header id 的第一个条目的position  {@link #getHeaderId(Object, int)}
+     * @param position header 条目下标
      */
-    public abstract void convertHeader(BaseViewHolder holder, T t, int position);
+    public abstract void convertHeader(T t, BaseViewHolder holder, int position);
 }

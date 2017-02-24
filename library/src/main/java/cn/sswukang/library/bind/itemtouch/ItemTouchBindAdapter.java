@@ -1,5 +1,7 @@
-package cn.sswukang.library.common.itemtouch;
+package cn.sswukang.library.bind.itemtouch;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
@@ -9,29 +11,33 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
-import cn.sswukang.library.common.base.BaseAdapter;
+import cn.sswukang.library.bind.base.BaseBindAdapter;
+import cn.sswukang.library.common.itemtouch.ItemTouchCallBack;
 
 
 /**
- * ItemTouch Adapter
+ * ItemTouch Adapter Adapter (DataBinding模式)
  *
- * @author sswukang on 2017/2/20 15:36
+ * @author sswukang on 2017/2/24 14:16
  * @version 1.0
  */
-public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHolder>
-        implements ItemTouchCallBack.OnMoveSwipeListener, ItemTouchViewHolder.ItemViewStateChangeListener {
+public abstract class ItemTouchBindAdapter<T, B extends ViewDataBinding>
+        extends BaseBindAdapter<T, B, ItemTouchBindViewHolder<B>>
+        implements ItemTouchCallBack.OnMoveSwipeListener, ItemTouchBindViewHolder.ItemViewStateChangeListener {
     /**
      * @param layoutId adapter需要的布局资源id
      * @param data     数据
      */
-    protected ItemTouchAdapter(@LayoutRes int layoutId, List<T> data) {
+    protected ItemTouchBindAdapter(@LayoutRes int layoutId, List<T> data) {
         super(layoutId, data);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final ItemTouchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return ItemTouchViewHolder.get(LayoutInflater.from(parent.getContext())
-                .inflate(viewType, parent, false), viewType, this, this);
+    public final ItemTouchBindViewHolder<B> onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        B binding = DataBindingUtil.inflate(inflater, viewType, parent, false);
+        return ItemTouchBindViewHolder.get(binding, viewType, this, this);
     }
 
     @Override
@@ -64,7 +70,7 @@ public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHo
     /**
      * item的单击事件
      *
-     * @param itemView 点击的item {@link ItemTouchViewHolder#itemView}
+     * @param itemView 点击的item {@link ItemTouchBindViewHolder#itemView}
      * @param t        每个 position 对应的封装
      */
     public void onItemClick(View itemView, T t) {
@@ -74,7 +80,7 @@ public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHo
     /**
      * item的长按事件
      *
-     * @param itemView 点击的item {@link ItemTouchViewHolder#itemView}
+     * @param itemView 点击的item {@link ItemTouchBindViewHolder#itemView}
      * @param t        每个 position 对应的封装
      * @return 长按事件是否被消费
      */
