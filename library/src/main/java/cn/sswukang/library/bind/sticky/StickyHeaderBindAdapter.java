@@ -1,5 +1,6 @@
 package cn.sswukang.library.bind.sticky;
 
+import android.databinding.BaseObservable;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
@@ -19,8 +20,8 @@ import cn.sswukang.library.lib.sticky_header.sticky.StickyRecyclerHeadersAdapter
  * @author sswukang on 2017/2/23 18:43
  * @version 1.0
  */
-public abstract class StickyHeaderBindAdapter<T, B extends ViewDataBinding> extends SingleBindAdapter<T, B>
-        implements StickyRecyclerHeadersAdapter<BaseBindViewHolder<B>> {
+public abstract class StickyHeaderBindAdapter<T extends BaseObservable, B extends ViewDataBinding>
+        extends SingleBindAdapter<T, B> implements StickyRecyclerHeadersAdapter<BaseBindViewHolder<B>> {
 
     // sticky header res id;
     @LayoutRes
@@ -54,7 +55,9 @@ public abstract class StickyHeaderBindAdapter<T, B extends ViewDataBinding> exte
 
     @Override
     public final void onBindHeaderViewHolder(BaseBindViewHolder<B> holder, int position) {
-        convertHeader(getItem(position), holder.getBinding(), holder, position);
+        B binding = holder.getBinding();
+        convertHeader(getItem(position), binding, holder, position);
+        binding.executePendingBindings();
     }
 
     /**

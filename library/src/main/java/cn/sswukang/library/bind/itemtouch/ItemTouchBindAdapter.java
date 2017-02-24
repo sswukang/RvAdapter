@@ -1,5 +1,6 @@
 package cn.sswukang.library.bind.itemtouch;
 
+import android.databinding.BaseObservable;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
@@ -21,7 +22,7 @@ import cn.sswukang.library.common.itemtouch.ItemTouchCallBack;
  * @author sswukang on 2017/2/24 14:16
  * @version 1.0
  */
-public abstract class ItemTouchBindAdapter<T, B extends ViewDataBinding>
+public abstract class ItemTouchBindAdapter<T extends BaseObservable, B extends ViewDataBinding>
         extends BaseBindAdapter<T, B, ItemTouchBindViewHolder<B>>
         implements ItemTouchCallBack.OnMoveSwipeListener, ItemTouchBindViewHolder.ItemViewStateChangeListener {
     /**

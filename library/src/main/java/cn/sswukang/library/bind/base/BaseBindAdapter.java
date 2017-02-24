@@ -1,5 +1,6 @@
 package cn.sswukang.library.bind.base;
 
+import android.databinding.BaseObservable;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author sswukang on 2017/2/23 18:13
  * @version 1.0
  */
-public abstract class BaseBindAdapter<T, B extends ViewDataBinding, H extends BaseBindViewHolder<B>>
+public abstract class BaseBindAdapter<T extends BaseObservable, B extends ViewDataBinding, H extends BaseBindViewHolder<B>>
         extends RecyclerView.Adapter<H> implements BaseBindViewHolder.RecyclerClickListener {
 
     @LayoutRes
@@ -97,7 +98,9 @@ public abstract class BaseBindAdapter<T, B extends ViewDataBinding, H extends Ba
     // 绑定hold
     @Override
     public void onBindViewHolder(H holder, int position) {
-        convert(getItem(position), holder.getBinding(), holder);
+        B binding = holder.getBinding();
+        convert(getItem(position), binding, holder);
+        binding.executePendingBindings();
     }
 
     /**

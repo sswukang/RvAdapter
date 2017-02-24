@@ -1,5 +1,6 @@
 package cn.sswukang.example.model;
 
+import android.databinding.BaseObservable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,7 +10,7 @@ import android.os.Parcelable;
  * @author sswukang on 2017/2/21 9:51
  * @version 1.0
  */
-public class Country implements Parcelable {
+public class Country extends BaseObservable implements Parcelable {
     // 国家id
     private int countryId;
     // 国家编码

@@ -1,10 +1,18 @@
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="MainSingleFragmentBinding">
 
         <variable
             name="mainSingle"
             type="cn.sswukang.example.viewmodel.MainSingelViewModel" />
+
+        <variable
+            name="adapter"
+            type="android.support.v7.widget.RecyclerView.Adapter" />
+
+        <variable
+            name="layoutManager"
+            type="android.support.v7.widget.RecyclerView.LayoutManager" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,6 +22,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/single_recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:adapter="@{adapter}"
+            app:layoutManager="@{layoutManager}" />
     </FrameLayout>
 </layout>

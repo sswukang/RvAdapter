@@ -1,5 +1,6 @@
 package cn.sswukang.library.bind.single;
 
+import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
 import android.view.View;
@@ -15,7 +16,7 @@ import cn.sswukang.library.bind.base.BaseBindViewHolder;
  * @author sswukang on 2017/2/23 18:17
  * @version 1.0
  */
-public abstract class SingleBindAdapter<T, B extends ViewDataBinding>
+public abstract class SingleBindAdapter<T extends BaseObservable, B extends ViewDataBinding>
         extends BaseBindAdapter<T, B, BaseBindViewHolder<B>> {
     /**
      * @param layoutId adapter需要的布局资源id
