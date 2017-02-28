@@ -21,12 +21,12 @@ public abstract class BaseFragment<T extends BaseActivity> extends Fragment {
     /**
      * @return 设置视图id
      */
-    public abstract int getLayoutId();
+    protected abstract int getLayoutId();
 
     /**
      * 初始化视图
      */
-    public abstract void initView();
+    protected abstract void initView();
 
     @Nullable
     @Override

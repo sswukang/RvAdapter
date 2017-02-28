@@ -17,12 +17,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * @return 设置视图id
      */
-    public abstract int getLayoutId();
+    protected abstract int getLayoutId();
 
     /**
      * 初始化视图
      */
-    public abstract void initView();
+    protected abstract void initView();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

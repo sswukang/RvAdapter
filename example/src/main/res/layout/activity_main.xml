@@ -13,8 +13,8 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
         app:theme="@style/AppTheme" />
 
-    <FrameLayout
-        android:id="@+id/main_container"
+    <cn.sswukang.example.view.NoScrollViewPager
+        android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

@@ -1,20 +1,21 @@
 package cn.sswukang.example.ui;
 
 import android.graphics.Color;
-import android.support.design.widget.Snackbar;
 import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import cn.sswukang.example.R;
 import cn.sswukang.example.base.BaseActivity;
+import cn.sswukang.example.base.BaseFragmentAdapter;
+import cn.sswukang.example.view.NoScrollViewPager;
 
 /**
  * 主界面
@@ -25,21 +26,23 @@ import cn.sswukang.example.base.BaseActivity;
 public class MainActivity extends BaseActivity {
     @BindView(R.id.top_toolbar)
     Toolbar topToolbar;
-    @BindView(R.id.main_container)
-    FrameLayout mainContainer;
+    @BindView(R.id.main_view_pager)
+    NoScrollViewPager mainViewPager;
 
     // 左pop
     private ListPopupWindow leftMenuPop;
     // 右pop
     private ListPopupWindow rightMenuPop;
+    // FragmentAdapter
+    private BaseFragmentAdapter<RvFragment> fragmentAdapter;
 
     @Override
-    public int getLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_main;
     }
 
     @Override
-    public void initView() {
+    protected void initView() {
         // 初始化ActionBar
         topToolbar.setTitleTextColor(Color.WHITE);
         topToolbar.setSubtitleTextColor(Color.argb(Math.round(255 * 0.8f), 255, 255, 255));
@@ -50,9 +53,11 @@ public class MainActivity extends BaseActivity {
         // 初始化PopupWindow
         initLeftMenuPop();
         initRightMenuPop();
-        // 初始化Fragment
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_container, new MainSingleFragment()).commitAllowingStateLoss();
+        // 初始化ViewPager
+        fragmentAdapter = new BaseFragmentAdapter<>(getSupportFragmentManager(),
+                Arrays.asList(new MainSingleFragment(), new MainMultiFragment(),
+                        new MainStickyFragment(), new MainStickySideFragment()));
+        mainViewPager.setAdapter(fragmentAdapter);
     }
 
     private void initLeftMenuPop() {
@@ -70,21 +75,7 @@ public class MainActivity extends BaseActivity {
         leftMenuPop.setDropDownGravity(Gravity.START);
         leftMenuPop.setModal(true);//设置是否是模式
         leftMenuPop.setOnItemClickListener((parent, view, position, id) -> {
-            Log.e("leftMenuPop", "viewId:" + view.getId() + " pos:" + position + " id:" + id);
-            switch (position) {
-                case 0:
-                    Snackbar.make(mainContainer, "single", 1000).show();
-                    break;
-                case 1:
-                    Snackbar.make(mainContainer, "multi", 1000).show();
-                    break;
-                case 2:
-                    Snackbar.make(mainContainer, "sticky", 1000).show();
-                    break;
-                case 3:
-                    Snackbar.make(mainContainer, "sticky_side", 1000).show();
-                    break;
-            }
+            mainViewPager.setCurrentItem(position, false);
             leftMenuPop.dismiss();
         });
     }
@@ -103,16 +94,15 @@ public class MainActivity extends BaseActivity {
         rightMenuPop.setDropDownGravity(Gravity.END);
         rightMenuPop.setModal(true);//设置是否是模式
         rightMenuPop.setOnItemClickListener((parent, view, position, id) -> {
-            Log.e("rightMenuPop", "viewId:" + view.getId() + " pos:" + position + " id:" + id);
             switch (position) {
                 case 0:
-                    Snackbar.make(mainContainer, "asc", 1000).show();
+                    fragmentAdapter.getItem(mainViewPager.getCurrentItem()).asc();
                     break;
                 case 1:
-                    Snackbar.make(mainContainer, "desc", 1000).show();
+                    fragmentAdapter.getItem(mainViewPager.getCurrentItem()).desc();
                     break;
                 case 2:
-                    Snackbar.make(mainContainer, "shuffle", 1000).show();
+                    fragmentAdapter.getItem(mainViewPager.getCurrentItem()).shuffle();
                     break;
             }
             rightMenuPop.dismiss();

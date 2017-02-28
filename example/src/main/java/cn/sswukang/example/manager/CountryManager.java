@@ -5,12 +5,12 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import net.sourceforge.pinyin4j.PinyinHelper;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.sswukang.example.model.Country;
 import cn.sswukang.example.util.Utils;
@@ -80,35 +80,35 @@ public class CountryManager {
     }
 
     /**
-     * @return 按国家中文名正序
-     */
-    public Comparator<Country> comparatorNameCnAcs() {
-        return (t1, t2) -> t1.getCountryNameCn().compareTo(t2.getCountryNameCn());
-    }
-
-    /**
-     * @return 按国家英文缩写正序
-     */
-    public Comparator<Country> comparatorAbAcs() {
-        return (t1, t2) -> t1.getAb().compareTo(t2.getAb());
-    }
-
-    /**
-     * 英文名排序时，找到每个首字母起始处。
+     * 得到列表的所有首字母集合
      *
-     * @param comparatorEnList 按国家英文名排序列表
-     * @param initials         首字母
+     * @return 首字母列表
+     */
+    public List<String> getInitialsList() {
+        Map<Character, String> map = new HashMap<>();
+        for (Country country : getCountryList()) {
+            String nameEn = country.getCountryNameEn();
+            map.put(nameEn.charAt(0), nameEn.substring(0, 1));
+        }
+        return new ArrayList<>(map.values());
+    }
+
+    /**
+     * 按英文名排序的每个首字母起始处。
+     *
+     * @param comparatorList 排序列表
+     * @param initials       首字母
      * @return 起始处下标
      */
-    public int getEnInitialsIndex(List<Country> comparatorEnList, char initials) {
+    public int getInitialsIndex(List<Country> comparatorList, char initials) {
         if (initials >= 'a' && initials <= 'z')
             initials -= 32;
         if (initials < 'A' || initials > 'Z')
             throw new IllegalArgumentException("'initials' not in alphabet");
 
-        int size = comparatorEnList.size();
+        int size = comparatorList.size();
         for (int i = 0; i < size; i++) {
-            char enInitials = comparatorEnList.get(i).getCountryNameEn().charAt(0);
+            char enInitials = comparatorList.get(i).getCountryNameEn().charAt(0);
             if (enInitials >= 'a' && enInitials <= 'z')
                 enInitials -= 32;
             if (enInitials == initials) {
@@ -116,35 +116,6 @@ public class CountryManager {
             }
         }
 
-        return size;
-    }
-
-    /**
-     * 中文名排序时，找到每个拼音首字母起始处。
-     *
-     * @param comparatorCnList 按国家中文名排序列表
-     * @param initials         拼音首字母
-     * @return 起始处下标
-     */
-    public int getCnInitialsIndex(List<Country> comparatorCnList, char initials) {
-        if (initials >= 'a' && initials <= 'z')
-            initials -= 32;
-        if (initials < 'A' || initials > 'Z')
-            throw new IllegalArgumentException("'initials' not in alphabet");
-
-        int size = comparatorCnList.size();
-        for (int i = 0; i < size; i++) {
-            char cnInitials = comparatorCnList.get(i).getCountryNameCn().charAt(0);
-            String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(cnInitials);
-            if (pinyinArray != null) {
-                cnInitials = pinyinArray[0].charAt(0);
-            }
-            if (cnInitials >= 'a' && cnInitials <= 'z')
-                cnInitials -= 32;
-            if (cnInitials == initials) {
-                return i;
-            }
-        }
         return size;
     }
 

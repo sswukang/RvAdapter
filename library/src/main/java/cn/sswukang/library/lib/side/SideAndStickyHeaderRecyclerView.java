@@ -11,6 +11,8 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.util.List;
+
 import cn.sswukang.library.common.sticky.StickyHeaderAdapter;
 import cn.sswukang.library.lib.sticky_header.sticky.StickyRecyclerHeadersDecoration;
 
@@ -173,6 +175,10 @@ public class SideAndStickyHeaderRecyclerView extends FrameLayout {
 
     public void setIndexItems(String... indexItems) {
         sideBar.setIndexItems(indexItems);
+    }
+
+    public void setIndexItems(List<String> indexItems) {
+        sideBar.setIndexItems(indexItems.toArray(new String[indexItems.size()]));
     }
 
     public void setTextColor(@ColorInt int color) {

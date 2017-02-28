@@ -11,46 +11,46 @@ import android.os.Parcelable;
  */
 public class Country implements Parcelable {
     // 国家id
-    private int countryId;
+    private int country_id;
     // 国家编码
-    private int countryCode;
+    private int country_code;
     // 国家英文名
-    private String countryNameEn;
+    private String country_name_en;
     // 国家中文名
-    private String countryNameCn;
+    private String country_name_cn;
     // 国家英文缩写
     private String ab;
 
     public int getCountryId() {
-        return countryId;
+        return country_id;
     }
 
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
+    public void setCountryId(int country_id) {
+        this.country_id = country_id;
     }
 
     public int getCountryCode() {
-        return countryCode;
+        return country_code;
     }
 
-    public void setCountryCode(int countryCode) {
-        this.countryCode = countryCode;
+    public void setCountryCode(int country_code) {
+        this.country_code = country_code;
     }
 
     public String getCountryNameEn() {
-        return countryNameEn;
+        return country_name_en;
     }
 
-    public void setCountryNameEn(String countryNameEn) {
-        this.countryNameEn = countryNameEn;
+    public void setCountryNameEn(String country_name_en) {
+        this.country_name_en = country_name_en;
     }
 
     public String getCountryNameCn() {
-        return countryNameCn;
+        return country_name_cn;
     }
 
-    public void setCountryNameCn(String countryNameCn) {
-        this.countryNameCn = countryNameCn;
+    public void setCountryNameCn(String country_name_cn) {
+        this.country_name_cn = country_name_cn;
     }
 
     public String getAb() {
@@ -63,13 +63,8 @@ public class Country implements Parcelable {
 
     @Override
     public String toString() {
-        return "Country{" +
-                "countryId=" + countryId +
-                ", countryCode=" + countryCode +
-                ", countryNameEn='" + countryNameEn + '\'' +
-                ", countryNameCn='" + countryNameCn + '\'' +
-                ", ab='" + ab + '\'' +
-                '}';
+        return "id:" + country_id + "  " + country_name_cn + "(" + country_code + ")"
+                + "  " + country_name_en + "(" + ab + ")";
     }
 
     @Override
@@ -79,10 +74,10 @@ public class Country implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.countryId);
-        dest.writeInt(this.countryCode);
-        dest.writeString(this.countryNameEn);
-        dest.writeString(this.countryNameCn);
+        dest.writeInt(this.country_id);
+        dest.writeInt(this.country_code);
+        dest.writeString(this.country_name_en);
+        dest.writeString(this.country_name_cn);
         dest.writeString(this.ab);
     }
 
@@ -90,14 +85,14 @@ public class Country implements Parcelable {
     }
 
     protected Country(Parcel in) {
-        this.countryId = in.readInt();
-        this.countryCode = in.readInt();
-        this.countryNameEn = in.readString();
-        this.countryNameCn = in.readString();
+        this.country_id = in.readInt();
+        this.country_code = in.readInt();
+        this.country_name_en = in.readString();
+        this.country_name_cn = in.readString();
         this.ab = in.readString();
     }
 
-    public static final Parcelable.Creator<Country> CREATOR = new Parcelable.Creator<Country>() {
+    public static final Creator<Country> CREATOR = new Creator<Country>() {
         @Override
         public Country createFromParcel(Parcel source) {
             return new Country(source);
