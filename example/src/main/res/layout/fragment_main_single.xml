@@ -1,29 +1,15 @@
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data class="MainSingleFragmentBinding">
-
-        <variable
-            name="mainSingle"
-            type="cn.sswukang.example.viewmodel.MainSingelViewModel" />
-
-        <variable
-            name="adapter"
-            type="android.support.v7.widget.RecyclerView.Adapter" />
-
-        <variable
-            name="layoutManager"
-            type="android.support.v7.widget.RecyclerView.LayoutManager" />
-    </data>
-
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/single_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/single_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:adapter="@{adapter}"
-            app:layoutManager="@{layoutManager}" />
-    </FrameLayout>
-</layout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/app_name" />
+</FrameLayout>

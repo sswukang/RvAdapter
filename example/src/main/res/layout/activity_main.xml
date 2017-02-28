@@ -1,34 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <data class="MainActivityBinding">
-
-        <import type="android.text.TextUtils" />
-
-        <variable
-            name="main"
-            type="cn.sswukang.example.viewmodel.MainViewModel" />
-    </data>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/top_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:theme="@style/AppTheme" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/top_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-            app:subtitle='@{TextUtils.isEmpty(main.nameCn) ? "": main.nameEn}'
-            app:theme="@style/AppTheme"
-            app:title='@{TextUtils.isEmpty(main.nameCn) ? @string/none : main.nameCn}' />
-
-        <FrameLayout
-            android:id="@+id/main_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-</layout>
+    <FrameLayout
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

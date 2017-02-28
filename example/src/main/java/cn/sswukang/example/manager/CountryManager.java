@@ -1,9 +1,9 @@
 package cn.sswukang.example.manager;
 
 import android.content.Context;
-import android.databinding.repacked.google.common.reflect.TypeToken;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 
