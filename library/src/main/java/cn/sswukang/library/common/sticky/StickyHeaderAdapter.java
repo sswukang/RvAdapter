@@ -35,6 +35,7 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
     public StickyHeaderAdapter(@LayoutRes int headerLayoutId, @LayoutRes int layoutId, List<T> data) {
         super(layoutId, data);
         this.headerLayoutId = headerLayoutId;
+        this.headerHeight = setHeaderHeight();
     }
 
     @Override
@@ -46,7 +47,6 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
     public final BaseViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View root = inflater.inflate(headerLayoutId, parent, false);
-        this.headerHeight = root.getLayoutParams().height;
         return BaseViewHolder.get(root, headerLayoutId, this);
     }
 
@@ -63,6 +63,13 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
     public int getHeaderHeight() {
         return headerHeight;
     }
+
+    /**
+     * 设置粘性头部高度，方便sticky header定位
+     *
+     * @return sticky header height
+     */
+    public abstract int setHeaderHeight();
 
     /**
      * 获得 header id 。如果某几个条目有相同的header，其id 需相同。

@@ -40,6 +40,11 @@ public class MainStickySideFragment extends RvFragment {
         adapter = new StickyHeaderAdapter<Country>(R.layout.rv_sticky_title, R.layout.rv_sticky_content,
                 Collections.emptyList()) {
             @Override
+            public int setHeaderHeight() {
+                return getResources().getDimensionPixelSize(R.dimen.main_sticky_header_height);
+            }
+
+            @Override
             public long getHeaderId(Country country, int position) {
                 return country.getCountryNameEn().charAt(0);
             }

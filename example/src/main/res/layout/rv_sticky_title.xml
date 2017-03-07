@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/main_sticky_header_height"
     android:background="@android:color/darker_gray"
     android:gravity="center"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/sticky_title_initials"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         android:textColor="@android:color/white" />
 </LinearLayout>
