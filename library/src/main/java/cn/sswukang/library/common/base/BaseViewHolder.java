@@ -1,12 +1,14 @@
 package cn.sswukang.library.common.base;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -20,26 +22,63 @@ import android.widget.TextView;
 /**
  * 自定义 RecyclerView 的 ViewHolder
  *
- * @author sswukang on 2017/2/17 9:01
+ * @author wukang on 2017/2/17 9:01
  * @version 1.0
  */
-public class BaseViewHolder extends RecyclerView.ViewHolder
-        implements View.OnClickListener, View.OnLongClickListener {
+public class BaseViewHolder extends RecyclerView.ViewHolder {
+
+    // 单击防抖动
+    private static abstract class DebouncingOnClickListener implements View.OnClickListener {
+        private static boolean enabled = true;
+
+        private static final Runnable ENABLE_AGAIN = () -> enabled = true;
+
+        @Override
+        public final void onClick(View v) {
+            if (enabled) {
+                enabled = false;
+                v.post(ENABLE_AGAIN);
+                doClick(v);
+            }
+        }
+
+        public abstract void doClick(View v);
+    }
+
+    /**
+     * RecyclerView Item 添加监听接口
+     */
+    protected interface RecyclerClickListener {
+        /**
+         * item 单击事件
+         */
+        void onItemClick(View v, int position, @LayoutRes int layoutId);
+
+        /**
+         * item 长按事件
+         */
+        boolean onItemLongClick(View v, int position, @LayoutRes int layoutId);
+    }
 
     private final SparseArray<View> views;
     @LayoutRes
     private int layoutId;
     private RecyclerClickListener listener;
 
-    protected BaseViewHolder(View root, @LayoutRes int layoutId, RecyclerClickListener listener) {
+    protected BaseViewHolder(View root, @LayoutRes int layoutId, RecyclerClickListener recyclerClickListener) {
         super(root);
         this.views = new SparseArray<>();
         this.layoutId = layoutId;
-        this.listener = listener;
+        this.listener = recyclerClickListener;
 
         //添加监听事件
-        itemView.setOnClickListener(this);
-        itemView.setOnLongClickListener(this);
+        itemView.setOnClickListener(new DebouncingOnClickListener() {
+            @Override
+            public void doClick(View v) {
+                listener.onItemClick(v, getLayoutPosition(), getLayoutId());
+            }
+        });
+        itemView.setOnLongClickListener(v -> listener.onItemLongClick(v, getLayoutPosition(), getLayoutId()));
     }
 
     /**
@@ -66,23 +105,9 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
         View view = views.get(viewId);
         if (view == null) {
             view = itemView.findViewById(viewId);
-            // 为TextView设置字体
-//            if (view instanceof TextView) {
-//                ((TextView) view).setTypeface(TTFUtil.tf_2nd);
-//            }
             views.put(viewId, view);
         }
         return (T) view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        listener.onItemClick(v, getLayoutPosition(), getLayoutId());
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        return listener.onItemLongClick(v, getLayoutPosition(), getLayoutId());
     }
 
     /**
@@ -95,6 +120,35 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
     }
 
     /**
+     * @return {@link ContextCompat#getColor(Context, int)}
+     */
+    @ColorInt
+    public int getColor(@ColorRes int resId) {
+        return ContextCompat.getColor(getContext(), resId);
+    }
+
+    /**
+     * @return {@link ContextCompat#getDrawable(Context, int)}
+     */
+    public Drawable getDrawable(@DrawableRes int resId) {
+        return ContextCompat.getDrawable(getContext(), resId);
+    }
+
+    /**
+     * @return {@link Context#getString(int)}
+     */
+    public String getString(@StringRes int resId) {
+        return getContext().getString(resId);
+    }
+
+    /**
+     * @return {@link Context#getString(int, Object...)}
+     */
+    public String getString(@StringRes int resId, Object... formatArgs) {
+        return getContext().getString(resId, formatArgs);
+    }
+
+    /**
      * 获得item布局资源id（可用于multi adapter里区别不同item）
      *
      * @return item view res id
@@ -102,6 +156,27 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
     @LayoutRes
     public int getLayoutId() {
         return layoutId;
+    }
+
+    /**
+     * {@link View#setOnClickListener(View.OnClickListener)}
+     */
+    public void setOnClickListener(@IdRes int viewId, View.OnClickListener listener) {
+        View view = getView(viewId);
+        view.setOnClickListener(new DebouncingOnClickListener() {
+            @Override
+            public void doClick(View v) {
+                listener.onClick(v);
+            }
+        });
+    }
+
+    /**
+     * {@link View#setOnLongClickListener(View.OnLongClickListener)}
+     */
+    public void setOnLongClickListener(@IdRes int viewId, View.OnLongClickListener listener) {
+        View view = getView(viewId);
+        view.setOnLongClickListener(listener);
     }
 
     /**
@@ -137,35 +212,42 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
      * 设置TextViewImage，方向个数必须和res个数相同
      *
      * @param viewId  View ID
-     * @param gravity {@link Gravity#START}|{@link Gravity#TOP}|{@link Gravity#END}|{@link Gravity#BOTTOM}
+     * @param gravity 多个方向可组合使用 {@link Gravity#START}|{@link Gravity#TOP}|{@link Gravity#END}|{@link Gravity#BOTTOM}
      * @param resId   资源ID
      */
     public void setTextImage(@IdRes int viewId, int gravity, @DrawableRes int... resId) {
-        int index = 0;
+        if (resId == null)
+            return;
 
         // 初始化Drawable
         int length = resId.length;
         Drawable[] initDrawables = new Drawable[length];
         for (int i = 0; i < length; i++) {
             Drawable drawable = ContextCompat.getDrawable(getContext(), resId[i]);
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            if (drawable != null)
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             initDrawables[i] = drawable;
         }
 
         // 设置Drawable
         Drawable[] setDrawables = new Drawable[4];
-        if ((gravity & Gravity.START) == Gravity.START) {
-            setDrawables[0] = initDrawables[index++];
+        try {
+            if ((gravity & Gravity.BOTTOM) == Gravity.BOTTOM) {
+                setDrawables[3] = initDrawables[--length];
+            }
+            if ((gravity & Gravity.END) == Gravity.END) {
+                setDrawables[2] = initDrawables[--length];
+            }
+            if ((gravity & Gravity.TOP) == Gravity.TOP) {
+                setDrawables[1] = initDrawables[--length];
+            }
+            if ((gravity & Gravity.START) == Gravity.START) {
+                setDrawables[0] = initDrawables[--length];
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("方向设置个数必须与资源id个数一致.");
         }
-        if ((gravity & Gravity.TOP) == Gravity.TOP) {
-            setDrawables[1] = initDrawables[index++];
-        }
-        if ((gravity & Gravity.END) == Gravity.END) {
-            setDrawables[2] = initDrawables[index++];
-        }
-        if ((gravity & Gravity.BOTTOM) == Gravity.BOTTOM) {
-            setDrawables[3] = initDrawables[index];
-        }
+
         TextView tv = getView(viewId);
         tv.setCompoundDrawables(setDrawables[0], setDrawables[1], setDrawables[2], setDrawables[3]);
     }
@@ -211,17 +293,21 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
     }
 
     /**
-     * RecyclerView Item 添加监听接口
+     * {@link ImageView#setImageDrawable(Drawable)}
      */
-    protected interface RecyclerClickListener {
-        /**
-         * item 单击事件
-         */
-        void onItemClick(View v, int position, @LayoutRes int layoutId);
-
-        /**
-         * item 长按事件
-         */
-        boolean onItemLongClick(View v, int position, @LayoutRes int layoutId);
+    public void setImageDrawable(@IdRes int viewId, @Nullable Drawable drawable) {
+        ImageView view = getView(viewId);
+        view.setImageDrawable(drawable);
     }
+
+    /**
+     * {@link ImageView#setImageDrawable(Drawable)}
+     */
+    public void setImageColor(@IdRes int viewId, @ColorRes int resId) {
+        ImageView view = getView(viewId);
+        view.setImageDrawable(new ColorDrawable(ContextCompat.getColor(getContext(), resId)));
+    }
+
+
+    /* 可自行扩展View及其子类的方法... */
 }
