@@ -1,6 +1,7 @@
 package cn.sswukang.library.common.base;
 
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,9 +85,10 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     }
 
     // 创建hold
+    @NonNull
     @SuppressWarnings("unchecked")
     @Override
-    public H onCreateViewHolder(ViewGroup parent, @LayoutRes int viewType) {
+    public H onCreateViewHolder(@NonNull ViewGroup parent, @LayoutRes int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View root = inflater.inflate(viewType, parent, false);
         return (H) H.get(root, viewType, this);
@@ -94,7 +96,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
     // 绑定hold
     @Override
-    public void onBindViewHolder(H holder, int position) {
+    public void onBindViewHolder(@NonNull H holder, int position) {
         convert(getItem(position), holder);
     }
 

@@ -1,5 +1,6 @@
 package cn.sswukang.library.lib.side;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -271,6 +272,7 @@ public class SideBar extends View {
         return scale;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (mIndexItems.length == 0) {

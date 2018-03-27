@@ -2,6 +2,7 @@ package cn.sswukang.library.common.itemtouch;
 
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,9 @@ public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHo
         super(layoutId, data);
     }
 
+    @NonNull
     @Override
-    public final ItemTouchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public final ItemTouchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return ItemTouchViewHolder.get(LayoutInflater.from(parent.getContext())
                 .inflate(viewType, parent, false), viewType, this, this);
     }

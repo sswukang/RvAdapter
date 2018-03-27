@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import cn.sswukang.example.model.Country;
 import cn.sswukang.example.util.Utils;
@@ -31,11 +32,11 @@ public class CountryManager {
     }
 
     private static class LazyHolder {
-        private static final CountryManager INSTANCE = new CountryManager();
+        private static final AtomicReference<CountryManager> INSTANCE = new AtomicReference<>(new CountryManager());
     }
 
     public static CountryManager getInstance() {
-        return CountryManager.LazyHolder.INSTANCE;
+        return LazyHolder.INSTANCE.get();
     }
 
     /**
@@ -44,8 +45,7 @@ public class CountryManager {
     public void init(Context context) {
         try {
             String json = Utils.getTextFromAssets(context, "countrycode.json");
-            countryList = new Gson().fromJson(json, new TypeToken<List<Country>>() {
-            }.getType());
+            countryList = new Gson().fromJson(json, new TypeToken<List<Country>>() {}.getType());
         } catch (IOException ignore) {
             countryList = new ArrayList<>();
         }

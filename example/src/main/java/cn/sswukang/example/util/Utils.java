@@ -20,9 +20,9 @@ public class Utils {
         InputStreamReader inputReader = new InputStreamReader(context.getAssets().open(fileName));
         BufferedReader bufReader = new BufferedReader(inputReader);
         String line;
-        String result = "";
+        StringBuilder result = new StringBuilder();
         while ((line = bufReader.readLine()) != null)
-            result += line;
-        return result;
+            result.append(line);
+        return result.toString();
     }
 }

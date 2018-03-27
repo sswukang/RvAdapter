@@ -1,5 +1,6 @@
 package cn.sswukang.example.ui;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.view.menu.MenuBuilder;
@@ -60,6 +61,7 @@ public class MainActivity extends BaseActivity {
         mainViewPager.setAdapter(fragmentAdapter);
     }
 
+    @SuppressLint("RestrictedApi")
     private void initLeftMenuPop() {
         MenuBuilder menuBuilder = new MenuBuilder(getContext());
         menuBuilder.setOptionalIconsVisible(true);
@@ -80,6 +82,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @SuppressLint("RestrictedApi")
     private void initRightMenuPop() {
         MenuBuilder menuBuilder = new MenuBuilder(getContext());
         menuBuilder.setOptionalIconsVisible(true);

@@ -150,17 +150,19 @@ class HeaderPositionCalculator {
             mDimensionCalculator.initMargins(mTempRect1, nextHeader);
             mDimensionCalculator.initMargins(mTempRect2, stickyHeader);
 
-            if (mOrientationProvider.getOrientation(recyclerView) == LinearLayoutManager.VERTICAL) {
-                int topOfNextHeader = viewAfterHeader.getTop() - mTempRect1.bottom - nextHeader.getHeight() - mTempRect1.top;
-                int bottomOfThisHeader = recyclerView.getPaddingTop() + stickyHeader.getBottom() + mTempRect2.top + mTempRect2.bottom;
-                if (topOfNextHeader < bottomOfThisHeader) {
-                    return true;
-                }
-            } else {
-                int leftOfNextHeader = viewAfterHeader.getLeft() - mTempRect1.right - nextHeader.getWidth() - mTempRect1.left;
-                int rightOfThisHeader = recyclerView.getPaddingLeft() + stickyHeader.getRight() + mTempRect2.left + mTempRect2.right;
-                if (leftOfNextHeader < rightOfThisHeader) {
-                    return true;
+            if (viewAfterHeader != null) {
+                if (mOrientationProvider.getOrientation(recyclerView) == LinearLayoutManager.VERTICAL) {
+                    int topOfNextHeader = viewAfterHeader.getTop() - mTempRect1.bottom - nextHeader.getHeight() - mTempRect1.top;
+                    int bottomOfThisHeader = recyclerView.getPaddingTop() + stickyHeader.getBottom() + mTempRect2.top + mTempRect2.bottom;
+                    if (topOfNextHeader < bottomOfThisHeader) {
+                        return true;
+                    }
+                } else {
+                    int leftOfNextHeader = viewAfterHeader.getLeft() - mTempRect1.right - nextHeader.getWidth() - mTempRect1.left;
+                    int rightOfThisHeader = recyclerView.getPaddingLeft() + stickyHeader.getRight() + mTempRect2.left + mTempRect2.right;
+                    if (leftOfNextHeader < rightOfThisHeader) {
+                        return true;
+                    }
                 }
             }
         }
