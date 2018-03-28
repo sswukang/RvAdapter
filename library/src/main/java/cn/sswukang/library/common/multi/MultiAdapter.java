@@ -26,56 +26,58 @@ public abstract class MultiAdapter<T> extends BaseAdapter<T, BaseViewHolder> {
     /**
      * 利用getItemViewType传递layout id
      *
-     * @param position 当前行数
+     * @param position 当前item的position（无限轮播时会超过数据总个数）
      * @return layout id
      */
     @LayoutRes
     @Override
     public int getItemViewType(int position) {
-        return getItemLayoutId(getItem(position), position);
+        return getItemLayoutId(position, getDataItem(position));
     }
 
     @Override
-    public final void convert(T t, BaseViewHolder holder) {
-        convert(t, holder, holder.getLayoutId());
+    public final void convert(int position, T t, BaseViewHolder holder) {
+        convert(position, t, holder, holder.getLayoutId());
     }
 
     @Override
     public final void onItemClick(View itemView, int position, @LayoutRes int layoutId) {
-        onItemClick(itemView, getItem(position), layoutId);
+        onItemClick(itemView, position, getDataItem(position), layoutId);
     }
 
     @Override
     public final boolean onItemLongClick(View itemView, int position, @LayoutRes int layoutId) {
-        return onItemLongClick(itemView, getItem(position), layoutId);
+        return onItemLongClick(itemView, position, getDataItem(position), layoutId);
     }
 
     /**
      * 实现该抽象方法，得到单个item的layout id。
      *
-     * @param t        每个 position 对应的封装
-     * @param position 当前行数
+     * @param position 当前item的position（无限轮播时会超过数据总个数）
+     * @param t        position 对应的对象（无限轮播时为对数据总个数取余后对应的对象）
      * @return layout id
      */
-    public abstract int getItemLayoutId(T t, int position);
+    public abstract int getItemLayoutId(int position, T t);
 
     /**
      * 实现该抽象方法，完成数据的填充。
      *
-     * @param t        每个 position 对应的封装
+     * @param position 当前item的position（无限轮播时会超过数据总个数）
+     * @param t        position 对应的对象（无限轮播时为对数据总个数取余后对应的对象）
      * @param holder   {@link BaseViewHolder}
      * @param layoutId 布局id (用于区别不同item)
      */
-    public abstract void convert(T t, BaseViewHolder holder, @LayoutRes int layoutId);
+    public abstract void convert(int position, T t, BaseViewHolder holder, @LayoutRes int layoutId);
 
     /**
      * item的单击事件
      *
      * @param itemView 触发点击事件的View
-     * @param t        每个 position 对应的封装
+     * @param position 当前点击的position，采用{@link BaseViewHolder#getLayoutPosition()}（无限轮播时会超过数据总个数）
+     * @param t        position 对应的对象（无限轮播时为对数据总个数取余后对应的对象）
      * @param layoutId 布局id (用于区别不同item)
      */
-    public void onItemClick(View itemView, T t, @LayoutRes int layoutId) {
+    public void onItemClick(View itemView, int position, T t, @LayoutRes int layoutId) {
         // do something...
     }
 
@@ -83,11 +85,12 @@ public abstract class MultiAdapter<T> extends BaseAdapter<T, BaseViewHolder> {
      * item的长按事件
      *
      * @param itemView 触发点击事件的View
-     * @param t        每个 position 对应的封装
+     * @param position 当前点击的position，采用{@link BaseViewHolder#getLayoutPosition()}（无限轮播时会超过数据总个数）
+     * @param t        position 对应的对象（无限轮播时为对数据总个数取余后对应的对象）
      * @param layoutId 布局id (用于区别不同item)
      * @return 长按事件是否被消费
      */
-    public boolean onItemLongClick(View itemView, T t, @LayoutRes int layoutId) {
+    public boolean onItemLongClick(View itemView, int position, T t, @LayoutRes int layoutId) {
         return false;
     }
 }

@@ -4,6 +4,7 @@ android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
     defaultConfig {
+        applicationId "cn.sswukang.rvadapter"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionCode verCode

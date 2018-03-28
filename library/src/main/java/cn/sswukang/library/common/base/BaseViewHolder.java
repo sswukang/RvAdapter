@@ -63,13 +63,11 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     private final SparseArray<View> views;
     @LayoutRes
     private int layoutId;
-    private RecyclerClickListener listener;
 
-    protected BaseViewHolder(View root, @LayoutRes int layoutId, RecyclerClickListener recyclerClickListener) {
+    protected BaseViewHolder(View root, @LayoutRes int layoutId, RecyclerClickListener listener) {
         super(root);
         this.views = new SparseArray<>();
         this.layoutId = layoutId;
-        this.listener = recyclerClickListener;
 
         //添加监听事件
         itemView.setOnClickListener(new DebouncingOnClickListener() {

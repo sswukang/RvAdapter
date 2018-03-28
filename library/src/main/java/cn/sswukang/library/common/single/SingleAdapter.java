@@ -25,21 +25,22 @@ public abstract class SingleAdapter<T> extends BaseAdapter<T, BaseViewHolder> {
 
     @Override
     public final void onItemClick(View itemView, int position, @LayoutRes int layoutId) {
-        onItemClick(itemView, getItem(position));
+        onItemClick(itemView, position, getDataItem(position));
     }
 
     @Override
     public final boolean onItemLongClick(View itemView, int position, @LayoutRes int layoutId) {
-        return onItemLongClick(itemView, getItem(position));
+        return onItemLongClick(itemView, position, getDataItem(position));
     }
 
     /**
      * item的单击事件
      *
      * @param itemView 点击的item {@link BaseViewHolder#itemView}
-     * @param t        每个 position 对应的封装
+     * @param position 当前点击的position，采用{@link BaseViewHolder#getLayoutPosition()}（无限轮播时会超过数据总个数）
+     * @param t        position 对应的对象（无限轮播时为对数据总个数取余后对应的对象）
      */
-    public void onItemClick(View itemView, T t) {
+    public void onItemClick(View itemView, int position, T t) {
         // do something...
     }
 
@@ -47,10 +48,11 @@ public abstract class SingleAdapter<T> extends BaseAdapter<T, BaseViewHolder> {
      * item的长按事件
      *
      * @param itemView 点击的item {@link BaseViewHolder#itemView}
-     * @param t        每个 position 对应的封装
+     * @param position 当前点击的position，采用{@link BaseViewHolder#getLayoutPosition()}（无限轮播时会超过数据总个数）
+     * @param t        position 对应的对象（无限轮播时为对数据总个数取余后对应的对象）
      * @return 长按事件是否被消费
      */
-    public boolean onItemLongClick(View itemView, T t) {
+    public boolean onItemLongClick(View itemView, int position, T t) {
         return false;
     }
 }

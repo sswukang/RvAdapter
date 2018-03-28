@@ -46,12 +46,12 @@ public class MainMultiFragment extends RvFragment {
         list.addAll(CountryManager.getInstance().getCountryList());
         adapter = new MultiAdapter<Country>(list) {
             @Override
-            public int getItemLayoutId(Country country, int position) {
+            public int getItemLayoutId(int position, Country country) {
                 return position == 0 ? R.layout.rv_multi_title : R.layout.rv_multi_content;
             }
 
             @Override
-            public void convert(Country country, BaseViewHolder holder, @LayoutRes int layoutId) {
+            public void convert(int position, Country country, BaseViewHolder holder, @LayoutRes int layoutId) {
                 switch (layoutId) {
                     case R.layout.rv_multi_title:
                         holder.setText(R.id.multi_title_ab, country.getCountryNameEn());
@@ -65,7 +65,7 @@ public class MainMultiFragment extends RvFragment {
             }
 
             @Override
-            public void onItemClick(View itemView, Country country, @LayoutRes int layoutId) {
+            public void onItemClick(View itemView, int position, Country country, @LayoutRes int layoutId) {
                 Snackbar.make(itemView, country.toString(), Snackbar.LENGTH_LONG)
                         .addCallback(new Snackbar.Callback() {
                             @Override

@@ -29,6 +29,14 @@ public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHo
         super(layoutId, data);
     }
 
+    /**
+     * @return 设置item总个数（不允许设置无限轮播）
+     */
+    @Override
+    public final int getItemCount() {
+        return super.getItemCount();
+    }
+
     @NonNull
     @Override
     public final ItemTouchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,12 +46,12 @@ public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHo
 
     @Override
     public final void onItemClick(View itemView, int position, @LayoutRes int layoutId) {
-        onItemClick(itemView, getItem(position));
+        onItemClick(itemView, position, getDataItem(position));
     }
 
     @Override
     public final boolean onItemLongClick(View itemView, int position, @LayoutRes int layoutId) {
-        return onItemLongClick(itemView, getItem(position));
+        return onItemLongClick(itemView, position, getDataItem(position));
     }
 
     @Override
@@ -67,9 +75,10 @@ public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHo
      * item的单击事件
      *
      * @param itemView 点击的item {@link ItemTouchViewHolder#itemView}
-     * @param t        每个 position 对应的封装
+     * @param position 当前item的position
+     * @param t        position 对应的对象
      */
-    public void onItemClick(View itemView, T t) {
+    public void onItemClick(View itemView, int position, T t) {
         // do something...
     }
 
@@ -77,17 +86,17 @@ public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHo
      * item的长按事件
      *
      * @param itemView 点击的item {@link ItemTouchViewHolder#itemView}
-     * @param t        每个 position 对应的封装
+     * @param position 当前item的position
+     * @param t        position 对应的对象
      * @return 长按事件是否被消费
      */
-    public boolean onItemLongClick(View itemView, T t) {
+    public boolean onItemLongClick(View itemView, int position, T t) {
         return false;
     }
 
     public void onItemPressed(View itemView) {
         itemView.setBackgroundColor(Color.GRAY);
     }
-
 
     public void onItemClear(View itemView) {
         itemView.setBackgroundColor(Color.TRANSPARENT);

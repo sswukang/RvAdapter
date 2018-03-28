@@ -14,7 +14,7 @@ buildscript {
                 'supportLibrary'        : '27.1.0', // Android Support包版本
 
                 'majorNumber'           : 2, // 大版本号
-                'minorNumber'           : 0, // 小版本号
+                'minorNumber'           : 1, // 小版本号
                 'revisionNumberCMD'     : 'git rev-list HEAD --count', // 提交次数命令
                 'revisionDescriptionCMD': 'git describe --always', // 提交记录命令
         ]

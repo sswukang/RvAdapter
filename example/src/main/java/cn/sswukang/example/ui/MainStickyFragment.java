@@ -47,24 +47,24 @@ public class MainStickyFragment extends RvFragment {
             }
 
             @Override
-            public long getHeaderId(Country country, int position) {
+            public long getHeaderId(int position, Country country) {
                 return country.getCountryNameEn().charAt(0);
             }
 
             @Override
-            public void convertHeader(Country country, BaseViewHolder holder, int position) {
+            public void convertHeader(int position, Country country, BaseViewHolder holder) {
                 holder.setText(R.id.sticky_title_initials, country.getCountryNameEn().substring(0, 1));
             }
 
             @Override
-            public void convert(Country country, BaseViewHolder holder) {
+            public void convert(int position, Country country, BaseViewHolder holder) {
                 holder.setText(R.id.sticky_content_name,
                         country.getCountryNameCn() + "(" + country.getCountryNameEn() + ")");
                 holder.setText(R.id.sticky_content_code, "+" + country.getCountryCode());
             }
 
             @Override
-            public void onItemClick(View itemView, Country country) {
+            public void onItemClick(View itemView, int position, Country country) {
                 Snackbar.make(itemView, country.toString(), Snackbar.LENGTH_LONG)
                         .addCallback(new Snackbar.Callback() {
                             @Override
@@ -117,7 +117,7 @@ public class MainStickyFragment extends RvFragment {
                     initialsList.add(country);
                 }
             }
-            // 该个字母所有元素排序
+            // 该字母所有元素排序
             Collections.sort(initialsList, CountryManager.getInstance().comparatorNameEnAcs());
             shuffle.addAll(initialsList);
         }

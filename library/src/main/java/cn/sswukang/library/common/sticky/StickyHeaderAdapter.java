@@ -38,9 +38,17 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
         this.headerHeight = setHeaderHeight();
     }
 
+    /**
+     * @return 设置item总个数（不允许设置无限轮播）
+     */
+    @Override
+    public final int getItemCount() {
+        return super.getItemCount();
+    }
+
     @Override
     public final long getHeaderId(int position) {
-        return getHeaderId(getItem(position), position);
+        return getHeaderId(position, getDataItem(position));
     }
 
     @Override
@@ -52,7 +60,7 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
 
     @Override
     public final void onBindHeaderViewHolder(BaseViewHolder holder, int position) {
-        convertHeader(getItem(position), holder, position);
+        convertHeader(position, getDataItem(position), holder);
     }
 
     /**
@@ -76,18 +84,18 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
      * 如某条目不需要header，则return < 0 即可。
      * 例：字符串可以用 String.charAt(0)
      *
-     * @param t        每个 position 对应的封装
-     * @param position 当前行数
+     * @param position 当前item的position
+     * @param t        position 对应的对象
      * @return header id {@link StickyRecyclerHeadersAdapter#getHeaderId(int)}
      */
-    public abstract long getHeaderId(T t, int position);
+    public abstract long getHeaderId(int position, T t);
 
     /**
      * 填充粘性头部显示的内容
      *
+     * @param position header 条目下标
      * @param t        header 对象数据封装
      * @param holder   {@link BaseViewHolder}
-     * @param position header 条目下标
      */
-    public abstract void convertHeader(T t, BaseViewHolder holder, int position);
+    public abstract void convertHeader(int position, T t, BaseViewHolder holder);
 }

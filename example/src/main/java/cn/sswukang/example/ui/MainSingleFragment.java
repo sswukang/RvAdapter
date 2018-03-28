@@ -39,13 +39,13 @@ public class MainSingleFragment extends RvFragment {
         adapter = new SingleAdapter<Country>(R.layout.rv_single_item,
                 CountryManager.getInstance().getCountryList()) {
             @Override
-            public void convert(Country country, BaseViewHolder holder) {
+            public void convert(int position, Country country, BaseViewHolder holder) {
                 holder.setText(R.id.single_item_name, country.getCountryNameCn());
                 holder.setText(R.id.single_item_code, "+" + country.getCountryCode());
             }
 
             @Override
-            public void onItemClick(View itemView, Country country) {
+            public void onItemClick(View itemView, int position, Country country) {
                 Snackbar.make(itemView, country.toString(), Snackbar.LENGTH_LONG)
                         .addCallback(new Snackbar.Callback() {
                             @Override
