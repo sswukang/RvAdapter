@@ -1,10 +1,11 @@
-package cn.sswukang.library.common.itemtouch;
+package cn.sswukang.library.adapter.itemtouch;
 
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import cn.sswukang.library.common.base.BaseViewHolder;
+import cn.sswukang.library.adapter.base.BaseViewHolder;
+import cn.sswukang.library.listener.RecyclerClickListener;
 
 
 /**

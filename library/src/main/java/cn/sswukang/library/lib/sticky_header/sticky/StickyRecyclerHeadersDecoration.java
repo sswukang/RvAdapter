@@ -15,16 +15,16 @@ import cn.sswukang.library.lib.sticky_header.util.LinearLayoutOrientationProvide
 import cn.sswukang.library.lib.sticky_header.util.OrientationProvider;
 
 
-public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
+public class StickyRecyclerHeadersDecoration<VH extends RecyclerView.ViewHolder> extends RecyclerView.ItemDecoration {
 
-    private final StickyRecyclerHeadersAdapter mAdapter;
+    private final StickyRecyclerHeadersAdapter<VH> mAdapter;
     private final ItemVisibilityAdapter mVisibilityAdapter;
-    private final SparseArray<Rect> mHeaderRects = new SparseArray<>();
-    private final HeaderProvider mHeaderProvider;
     private final OrientationProvider mOrientationProvider;
-    private final HeaderPositionCalculator mHeaderPositionCalculator;
-    private final HeaderRenderer mRenderer;
     private final DimensionCalculator mDimensionCalculator;
+    private final HeaderRenderer mHeaderRenderer;
+    private final HeaderProvider mHeaderProvider;
+    private final HeaderPositionCalculator<VH> mHeaderPositionCalculator;
+    private final SparseArray<Rect> mHeaderRects = new SparseArray<>();
 
     /**
      * The following field is used as a buffer for internal calculations. Its sole purpose is to avoid
@@ -33,37 +33,38 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     private final Rect mTempRect = new Rect();
 
     //  Consider passing in orientation to simplify orientation accounting within calculation
-    public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter) {
+    public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter<VH> adapter) {
         this(adapter, null);
     }
 
-    public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, ItemVisibilityAdapter visibilityAdapter) {
-        this(adapter, new LinearLayoutOrientationProvider(), new DimensionCalculator(), visibilityAdapter);
+    public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter<VH> adapter, ItemVisibilityAdapter visibilityAdapter) {
+        this(adapter, visibilityAdapter, new LinearLayoutOrientationProvider(), new DimensionCalculator());
     }
 
-    private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider,
-                                            DimensionCalculator dimensionCalculator, ItemVisibilityAdapter visibilityAdapter) {
-        this(adapter, orientationProvider, dimensionCalculator, new HeaderRenderer(orientationProvider),
-                new HeaderViewCache(adapter, orientationProvider), visibilityAdapter);
+    private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter<VH> adapter, ItemVisibilityAdapter visibilityAdapter,
+                                           OrientationProvider orientationProvider, DimensionCalculator dimensionCalculator) {
+        this(adapter, visibilityAdapter, orientationProvider, dimensionCalculator,
+                new HeaderRenderer(orientationProvider), new HeaderViewCache<>(adapter, orientationProvider));
     }
 
-    private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider,
-                                            DimensionCalculator dimensionCalculator, HeaderRenderer headerRenderer, HeaderProvider headerProvider, ItemVisibilityAdapter visibilityAdapter) {
-        this(adapter, headerRenderer, orientationProvider, dimensionCalculator, headerProvider,
-                new HeaderPositionCalculator(adapter, headerProvider, orientationProvider,
-                        dimensionCalculator), visibilityAdapter);
+    private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter<VH> adapter, ItemVisibilityAdapter visibilityAdapter,
+                                           OrientationProvider orientationProvider, DimensionCalculator dimensionCalculator,
+                                           HeaderRenderer headerRenderer, HeaderProvider headerProvider) {
+        this(adapter, visibilityAdapter, orientationProvider, dimensionCalculator, headerRenderer, headerProvider,
+                new HeaderPositionCalculator<>(adapter, headerProvider, orientationProvider, dimensionCalculator));
     }
 
-    private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, HeaderRenderer headerRenderer,
-                                            OrientationProvider orientationProvider, DimensionCalculator dimensionCalculator, HeaderProvider headerProvider,
-                                            HeaderPositionCalculator headerPositionCalculator, ItemVisibilityAdapter visibilityAdapter) {
+    private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter<VH> adapter, ItemVisibilityAdapter visibilityAdapter,
+                                            OrientationProvider orientationProvider, DimensionCalculator dimensionCalculator,
+                                            HeaderRenderer headerRenderer, HeaderProvider headerProvider,
+                                            HeaderPositionCalculator<VH> headerPositionCalculator) {
         mAdapter = adapter;
-        mHeaderProvider = headerProvider;
-        mOrientationProvider = orientationProvider;
-        mRenderer = headerRenderer;
-        mDimensionCalculator = dimensionCalculator;
-        mHeaderPositionCalculator = headerPositionCalculator;
         mVisibilityAdapter = visibilityAdapter;
+        mOrientationProvider = orientationProvider;
+        mDimensionCalculator = dimensionCalculator;
+        mHeaderRenderer = headerRenderer;
+        mHeaderProvider = headerProvider;
+        mHeaderPositionCalculator = headerPositionCalculator;
     }
 
     @Override
@@ -121,7 +122,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
                     mHeaderRects.put(position, headerOffset);
                 }
                 mHeaderPositionCalculator.initHeaderBounds(headerOffset, parent, header, itemView, hasStickyHeader);
-                mRenderer.drawHeader(parent, canvas, header, headerOffset);
+                mHeaderRenderer.drawHeader(parent, canvas, header, headerOffset);
             }
         }
     }

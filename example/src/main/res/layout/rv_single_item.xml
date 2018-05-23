@@ -5,6 +5,7 @@
     android:layout_margin="10dp"
     android:background="@android:color/white"
     android:gravity="center"
+    android:orientation="horizontal"
     android:padding="15dp">
 
     <TextView

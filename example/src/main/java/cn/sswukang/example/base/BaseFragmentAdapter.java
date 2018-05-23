@@ -11,16 +11,16 @@ import java.util.List;
  * @author sswukang on 2016/8/30 11:28
  * @version 1.0
  */
-public class BaseFragmentAdapter<T extends BaseFragment> extends FragmentPagerAdapter {
-    private List<T> fragList; // 碎片集合
+public class BaseFragmentAdapter<A extends BaseActivity, F extends BaseFragment<A>> extends FragmentPagerAdapter {
+    private List<F> fragList; // 碎片集合
     private List<CharSequence> fragTags; // 碎片tag集合
 
-    public BaseFragmentAdapter(FragmentManager fm, List<T> fragList) {
+    public BaseFragmentAdapter(FragmentManager fm, List<F> fragList) {
         super(fm);
         this.fragList = fragList;
     }
 
-    public BaseFragmentAdapter(FragmentManager fm, List<T> fragList, List<CharSequence> fragTags) {
+    public BaseFragmentAdapter(FragmentManager fm, List<F> fragList, List<CharSequence> fragTags) {
         super(fm);
         this.fragList = fragList;
         this.fragTags = fragTags;
@@ -30,7 +30,7 @@ public class BaseFragmentAdapter<T extends BaseFragment> extends FragmentPagerAd
     }
 
     @Override
-    public T getItem(int position) {
+    public F getItem(int position) {
         return fragList.get(position);
     }
 

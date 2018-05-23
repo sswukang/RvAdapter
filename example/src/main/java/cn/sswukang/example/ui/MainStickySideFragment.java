@@ -1,6 +1,8 @@
 package cn.sswukang.example.ui;
 
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
@@ -13,8 +15,8 @@ import butterknife.BindView;
 import cn.sswukang.example.R;
 import cn.sswukang.example.manager.CountryManager;
 import cn.sswukang.example.model.Country;
-import cn.sswukang.library.common.base.BaseViewHolder;
-import cn.sswukang.library.common.sticky.StickyHeaderAdapter;
+import cn.sswukang.library.adapter.base.BaseViewHolder;
+import cn.sswukang.library.adapter.sticky.StickyHeaderAdapter;
 import cn.sswukang.library.lib.side.SideAndStickyHeaderRecyclerView;
 
 /**
@@ -23,7 +25,7 @@ import cn.sswukang.library.lib.side.SideAndStickyHeaderRecyclerView;
  * @author sswukang on 2017/2/28 16:20
  * @version 1.0
  */
-public class MainStickySideFragment extends RvFragment {
+public class MainStickySideFragment extends MainFragment {
 
     @BindView(R.id.rv_side_sticky)
     SideAndStickyHeaderRecyclerView rvSideSticky;
@@ -45,31 +47,41 @@ public class MainStickySideFragment extends RvFragment {
             }
 
             @Override
-            public long getHeaderId(int position, Country country) {
-                return country.getCountryNameEn().charAt(0);
+            public long getHeaderId(int position, @Nullable Country country) {
+                if (country != null) {
+                    return country.getCountryNameEn().charAt(0);
+                } else {
+                    return getItemId(position);
+                }
             }
 
             @Override
-            public void convertHeader(int position, Country country, BaseViewHolder holder) {
-                holder.setText(R.id.sticky_title_initials, country.getCountryNameEn().substring(0, 1));
+            public void convertHeader(int position, @Nullable Country country, BaseViewHolder holder) {
+                if (country != null) {
+                    holder.setText(R.id.sticky_title_initials, country.getCountryNameEn().substring(0, 1));
+                }
             }
 
             @Override
-            public void convert(int position, Country country, BaseViewHolder holder) {
-                holder.setText(R.id.sticky_content_name,
-                        country.getCountryNameCn() + "(" + country.getCountryNameEn() + ")");
-                holder.setText(R.id.sticky_content_code, "+" + country.getCountryCode());
+            public void convert(int position, @Nullable Country country, @NonNull BaseViewHolder holder) {
+                if (country != null) {
+                    holder.setText(R.id.sticky_content_name,
+                            country.getCountryNameCn() + "(" + country.getCountryNameEn() + ")");
+                    holder.setText(R.id.sticky_content_code, "+" + country.getCountryCode());
+                }
             }
 
             @Override
-            public void onItemClick(View itemView, int position, Country country) {
-                Snackbar.make(itemView, country.toString(), Snackbar.LENGTH_LONG)
-                        .addCallback(new Snackbar.Callback() {
-                            @Override
-                            public void onDismissed(Snackbar transientBottomBar, int event) {
-                                setToolbarContent(country.getCountryNameCn(), country.getCountryNameEn());
-                            }
-                        }).show();
+            public void onItemClick(View itemView, int position, @Nullable Country country) {
+                if (country != null) {
+                    Snackbar.make(itemView, country.toString(), Snackbar.LENGTH_LONG)
+                            .addCallback(new Snackbar.Callback() {
+                                @Override
+                                public void onDismissed(Snackbar transientBottomBar, int event) {
+                                    setToolbarContent(country.getCountryNameCn(), country.getCountryNameEn());
+                                }
+                            }).show();
+                }
             }
         };
         rvSideSticky.addItemDecoration(new DividerItemDecoration(getCreatorActivity(), DividerItemDecoration.VERTICAL));
@@ -80,7 +92,7 @@ public class MainStickySideFragment extends RvFragment {
 
     @Override
     public void asc() {
-        // Country 排序
+        // Country 正序
         List<Country> sort = CountryManager.getInstance().getCountryList();
         Collections.sort(sort, CountryManager.getInstance().comparatorNameEnAcs());
         // 首字母排序
@@ -101,7 +113,7 @@ public class MainStickySideFragment extends RvFragment {
 
     @Override
     public void desc() {
-        // Country 排序
+        // Country 倒序
         List<Country> sort = CountryManager.getInstance().getCountryList();
         Collections.sort(sort, CountryManager.getInstance().comparatorNameEnAcs());
         Collections.reverse(sort);

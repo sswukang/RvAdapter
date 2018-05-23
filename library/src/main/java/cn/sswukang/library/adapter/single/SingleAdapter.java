@@ -1,12 +1,13 @@
-package cn.sswukang.library.common.single;
+package cn.sswukang.library.adapter.single;
 
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import java.util.List;
 
-import cn.sswukang.library.common.base.BaseAdapter;
-import cn.sswukang.library.common.base.BaseViewHolder;
+import cn.sswukang.library.adapter.base.BaseAdapter;
+import cn.sswukang.library.adapter.base.BaseViewHolder;
 
 /**
  * single item Adapter
@@ -40,7 +41,7 @@ public abstract class SingleAdapter<T> extends BaseAdapter<T, BaseViewHolder> {
      * @param position 当前点击的position，采用{@link BaseViewHolder#getLayoutPosition()}（无限轮播时会超过数据总个数）
      * @param t        position 对应的对象（无限轮播时为对数据总个数取余后对应的对象）
      */
-    public void onItemClick(View itemView, int position, T t) {
+    public void onItemClick(View itemView, int position, @Nullable T t) {
         // do something...
     }
 
@@ -52,7 +53,7 @@ public abstract class SingleAdapter<T> extends BaseAdapter<T, BaseViewHolder> {
      * @param t        position 对应的对象（无限轮播时为对数据总个数取余后对应的对象）
      * @return 长按事件是否被消费
      */
-    public boolean onItemLongClick(View itemView, int position, T t) {
+    public boolean onItemLongClick(View itemView, int position, @Nullable T t) {
         return false;
     }
 }

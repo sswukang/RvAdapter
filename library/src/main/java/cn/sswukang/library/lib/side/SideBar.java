@@ -205,7 +205,7 @@ public class SideBar extends View {
         super.onDraw(canvas);
 
         // draw each item
-        for (int i = 0, mIndexItemsLength = mIndexItems.length; i < mIndexItemsLength; i++) {
+        for (int i = 0; i < mIndexItems.length; i++) {
             float baseLineY = mFirstItemBaseLineY + mIndexItemHeight * i;
 
             // calculate the scale factor of the item to draw

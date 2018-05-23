@@ -18,7 +18,7 @@ import cn.sswukang.example.util.Utils;
 
 
 /**
- * 城市列表
+ * 城市列表管理类
  *
  * @author sswukang on 2017/2/21 9:09
  * @version 1.0
@@ -45,9 +45,8 @@ public class CountryManager {
     public void init(Context context) {
         try {
             String json = Utils.getTextFromAssets(context, "countrycode.json");
-            countryList = new Gson().fromJson(json, new TypeToken<List<Country>>() {}.getType());
+            countryList.addAll(new Gson().fromJson(json, new TypeToken<List<Country>>() {}.getType()));
         } catch (IOException ignore) {
-            countryList = new ArrayList<>();
         }
     }
 
@@ -108,10 +107,10 @@ public class CountryManager {
 
         int size = comparatorList.size();
         for (int i = 0; i < size; i++) {
-            char enInitials = comparatorList.get(i).getCountryNameEn().charAt(0);
-            if (enInitials >= 'a' && enInitials <= 'z')
-                enInitials -= 32;
-            if (enInitials == initials) {
+            char endInitials = comparatorList.get(i).getCountryNameEn().charAt(0);
+            if (endInitials >= 'a' && endInitials <= 'z')
+                endInitials -= 32;
+            if (endInitials == initials) {
                 return i;
             }
         }

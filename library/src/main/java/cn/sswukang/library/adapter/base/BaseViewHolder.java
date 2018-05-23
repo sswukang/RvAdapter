@@ -1,4 +1,4 @@
-package cn.sswukang.library.common.base;
+package cn.sswukang.library.adapter.base;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -18,48 +18,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import cn.sswukang.library.listener.DebouncingOnClickListener;
+import cn.sswukang.library.listener.RecyclerClickListener;
+
 
 /**
  * 自定义 RecyclerView 的 ViewHolder
  *
  * @author wukang on 2017/2/17 9:01
- * @version 1.0
  */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
-
-    // 单击防抖动
-    private static abstract class DebouncingOnClickListener implements View.OnClickListener {
-        private static boolean enabled = true;
-
-        private static final Runnable ENABLE_AGAIN = () -> enabled = true;
-
-        @Override
-        public final void onClick(View v) {
-            if (enabled) {
-                enabled = false;
-                v.post(ENABLE_AGAIN);
-                doClick(v);
-            }
-        }
-
-        public abstract void doClick(View v);
-    }
-
-    /**
-     * RecyclerView Item 添加监听接口
-     */
-    protected interface RecyclerClickListener {
-        /**
-         * item 单击事件
-         */
-        void onItemClick(View v, int position, @LayoutRes int layoutId);
-
-        /**
-         * item 长按事件
-         */
-        boolean onItemLongClick(View v, int position, @LayoutRes int layoutId);
-    }
-
     private final SparseArray<View> views;
     @LayoutRes
     private int layoutId;
@@ -109,6 +77,16 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
+     * 获得item布局资源id（可用于multi adapter里区别不同item）
+     *
+     * @return item view res id
+     */
+    @LayoutRes
+    public int getLayoutId() {
+        return layoutId;
+    }
+
+    /**
      * 获得context，建议布局里使用用此方法得到context。
      *
      * @return {@link Context}
@@ -144,16 +122,6 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
      */
     public String getString(@StringRes int resId, Object... formatArgs) {
         return getContext().getString(resId, formatArgs);
-    }
-
-    /**
-     * 获得item布局资源id（可用于multi adapter里区别不同item）
-     *
-     * @return item view res id
-     */
-    @LayoutRes
-    public int getLayoutId() {
-        return layoutId;
     }
 
     /**

@@ -3,12 +3,12 @@ package cn.sswukang.example.ui;
 import cn.sswukang.example.base.BaseFragment;
 
 /**
- * show RecyclerView Fragment
+ * 主界面 base fragment
  *
  * @author sswukang on 2017/2/22 15:16
  * @version 1.0
  */
-public abstract class RvFragment extends BaseFragment<MainActivity> {
+public abstract class MainFragment extends BaseFragment<MainActivity> {
     public abstract void asc();
 
     public abstract void desc();

@@ -11,7 +11,7 @@ package cn.sswukang.library.lib.sticky_header.sticky;
  * To use it you must pass an instance of a class that implements this
  * interface as a second argment StickyRecyclerHeadersDecoration's constructor.
  */
-interface ItemVisibilityAdapter {
+public interface ItemVisibilityAdapter {
 
     /**
      * Return true the specified adapter position is visible, false otherwise

@@ -1,6 +1,8 @@
 package cn.sswukang.example.ui;
 
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +15,8 @@ import butterknife.BindView;
 import cn.sswukang.example.R;
 import cn.sswukang.example.manager.CountryManager;
 import cn.sswukang.example.model.Country;
-import cn.sswukang.library.common.base.BaseViewHolder;
-import cn.sswukang.library.common.single.SingleAdapter;
+import cn.sswukang.library.adapter.base.BaseViewHolder;
+import cn.sswukang.library.adapter.single.SingleAdapter;
 
 /**
  * Single Fragment
@@ -22,7 +24,7 @@ import cn.sswukang.library.common.single.SingleAdapter;
  * @author sswukang on 2017/2/22 16:29
  * @version 1.0
  */
-public class MainSingleFragment extends RvFragment {
+public class MainSingleFragment extends MainFragment {
 
     @BindView(R.id.common_rv)
     RecyclerView commonRv;
@@ -39,20 +41,24 @@ public class MainSingleFragment extends RvFragment {
         adapter = new SingleAdapter<Country>(R.layout.rv_single_item,
                 CountryManager.getInstance().getCountryList()) {
             @Override
-            public void convert(int position, Country country, BaseViewHolder holder) {
-                holder.setText(R.id.single_item_name, country.getCountryNameCn());
-                holder.setText(R.id.single_item_code, "+" + country.getCountryCode());
+            public void convert(int position, @Nullable Country country, @NonNull BaseViewHolder holder) {
+                if (country != null) {
+                    holder.setText(R.id.single_item_name, country.getCountryNameCn());
+                    holder.setText(R.id.single_item_code, "+" + country.getCountryCode());
+                }
             }
 
             @Override
-            public void onItemClick(View itemView, int position, Country country) {
-                Snackbar.make(itemView, country.toString(), Snackbar.LENGTH_LONG)
-                        .addCallback(new Snackbar.Callback() {
-                            @Override
-                            public void onDismissed(Snackbar transientBottomBar, int event) {
-                                setToolbarContent(country.getCountryNameCn(), country.getCountryNameEn());
-                            }
-                        }).show();
+            public void onItemClick(View itemView, int position, @Nullable Country country) {
+                if (country != null) {
+                    Snackbar.make(itemView, country.toString(), Snackbar.LENGTH_LONG)
+                            .addCallback(new Snackbar.Callback() {
+                                @Override
+                                public void onDismissed(Snackbar transientBottomBar, int event) {
+                                    setToolbarContent(country.getCountryNameCn(), country.getCountryNameEn());
+                                }
+                            }).show();
+                }
             }
         };
         commonRv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -61,7 +67,7 @@ public class MainSingleFragment extends RvFragment {
 
     @Override
     public void asc() {
-        // Country 排序
+        // Country 正序
         List<Country> sort = CountryManager.getInstance().getCountryList();
         Collections.sort(sort, CountryManager.getInstance().comparatorCodeAcs());
         // 刷新
@@ -71,7 +77,7 @@ public class MainSingleFragment extends RvFragment {
 
     @Override
     public void desc() {
-        // Country 排序
+        // Country 倒序
         List<Country> sort = CountryManager.getInstance().getCountryList();
         Collections.sort(sort, CountryManager.getInstance().comparatorCodeAcs());
         Collections.reverse(sort);

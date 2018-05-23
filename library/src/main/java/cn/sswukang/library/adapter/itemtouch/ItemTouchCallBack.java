@@ -1,4 +1,4 @@
-package cn.sswukang.library.common.itemtouch;
+package cn.sswukang.library.adapter.itemtouch;
 
 import android.graphics.Canvas;
 import android.support.v7.widget.GridLayoutManager;
@@ -76,9 +76,10 @@ public class ItemTouchCallBack extends ItemTouchHelper.Callback {
         }
     }
 
+    // item移动时
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {//正在侧滑, 根据位移修改item透明度
+        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) { // 正在侧滑, 根据位移修改item透明度
             final float alpha = ALPHA_FULL - Math.abs(dX) / viewHolder.itemView.getWidth();
             viewHolder.itemView.setAlpha(alpha);
             viewHolder.itemView.setTranslationX(dX);

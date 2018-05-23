@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity {
     // 右pop
     private ListPopupWindow rightMenuPop;
     // FragmentAdapter
-    private BaseFragmentAdapter<RvFragment> fragmentAdapter;
+    private BaseFragmentAdapter<MainActivity, MainFragment> fragmentAdapter;
 
     @Override
     protected int getLayoutId() {

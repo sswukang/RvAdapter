@@ -1,14 +1,15 @@
-package cn.sswukang.library.common.sticky;
+package cn.sswukang.library.adapter.sticky;
 
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
-import cn.sswukang.library.common.base.BaseViewHolder;
-import cn.sswukang.library.common.single.SingleAdapter;
+import cn.sswukang.library.adapter.base.BaseViewHolder;
+import cn.sswukang.library.adapter.single.SingleAdapter;
 import cn.sswukang.library.lib.sticky_header.sticky.StickyRecyclerHeadersAdapter;
 
 
@@ -39,7 +40,7 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
     }
 
     /**
-     * @return 设置item总个数（不允许设置无限轮播）
+     * 设置item总个数（不允许设置无限轮播）
      */
     @Override
     public final int getItemCount() {
@@ -88,7 +89,7 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
      * @param t        position 对应的对象
      * @return header id {@link StickyRecyclerHeadersAdapter#getHeaderId(int)}
      */
-    public abstract long getHeaderId(int position, T t);
+    public abstract long getHeaderId(int position, @Nullable T t);
 
     /**
      * 填充粘性头部显示的内容
@@ -97,5 +98,5 @@ public abstract class StickyHeaderAdapter<T> extends SingleAdapter<T>
      * @param t        header 对象数据封装
      * @param holder   {@link BaseViewHolder}
      */
-    public abstract void convertHeader(int position, T t, BaseViewHolder holder);
+    public abstract void convertHeader(int position, @Nullable T t, BaseViewHolder holder);
 }

@@ -1,4 +1,4 @@
-package cn.sswukang.library.common.base;
+package cn.sswukang.library.adapter.base;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -10,14 +10,16 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import cn.sswukang.library.listener.RecyclerClickListener;
+
 /**
- * RecyclerView基础Adapter。
+ * RecyclerView基础Adapter
  *
  * @author sswukang on 2017/2/17 9:30
  * @version 1.0
  */
 public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerView.Adapter<H>
-        implements BaseViewHolder.RecyclerClickListener {
+        implements RecyclerClickListener {
 
     @LayoutRes
     private int layoutId;
@@ -98,8 +100,8 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     }
 
     // 创建hold
-    @NonNull
     @SuppressWarnings("unchecked")
+    @NonNull
     @Override
     public H onCreateViewHolder(@NonNull ViewGroup parent, @LayoutRes int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -120,7 +122,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
      * @param t        position 对应的对象（无限轮播时为对数据总个数取余后对应的对象）
      * @param holder   {@link H}
      */
-    public abstract void convert(int position, T t, H holder);
+    public abstract void convert(int position, @Nullable T t, @NonNull H holder);
 
     /**
      * 单击事件

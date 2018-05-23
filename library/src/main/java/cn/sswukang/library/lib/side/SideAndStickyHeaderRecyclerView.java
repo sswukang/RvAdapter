@@ -13,7 +13,8 @@ import android.widget.FrameLayout;
 
 import java.util.List;
 
-import cn.sswukang.library.common.sticky.StickyHeaderAdapter;
+import cn.sswukang.library.adapter.base.BaseViewHolder;
+import cn.sswukang.library.adapter.sticky.StickyHeaderAdapter;
 import cn.sswukang.library.lib.sticky_header.sticky.StickyRecyclerHeadersDecoration;
 
 
@@ -34,7 +35,7 @@ public class SideAndStickyHeaderRecyclerView extends FrameLayout {
     /**
      * 利用decoration添加header
      */
-    private StickyRecyclerHeadersDecoration decoration;
+    private StickyRecyclerHeadersDecoration<BaseViewHolder> decoration;
     /**
      * 滑动监听，联动wave side
      */
@@ -93,7 +94,7 @@ public class SideAndStickyHeaderRecyclerView extends FrameLayout {
         if (linearLayoutManager == null)
             linearLayoutManager = new LinearLayoutManager(getContext());
         if (decoration == null)
-            decoration = new StickyRecyclerHeadersDecoration(adapter);
+            decoration = new StickyRecyclerHeadersDecoration<BaseViewHolder>(adapter);
         if (onScrollListener == null)
             onScrollListener = new RecyclerView.OnScrollListener() {
                 @Override

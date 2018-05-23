@@ -9,12 +9,12 @@ buildscript {
                 'compileSdk'            : 27, // 编译版本
                 'targetSdk'             : 27, // 目标版本
 
-                'androidPlugin'         : '3.0.1', // Android Gradle版本
+                'androidPlugin'         : '3.1.2', // Android Gradle版本
                 'buildTools'            : '27.0.3', // 编译工具版本
                 'supportLibrary'        : '27.1.0', // Android Support包版本
 
                 'majorNumber'           : 2, // 大版本号
-                'minorNumber'           : 1, // 小版本号
+                'minorNumber'           : 2, // 小版本号
                 'revisionNumberCMD'     : 'git rev-list HEAD --count', // 提交次数命令
                 'revisionDescriptionCMD': 'git describe --always', // 提交记录命令
         ]
@@ -38,7 +38,7 @@ buildscript {
                         'design'     : "com.android.support:design:${versions.supportLibrary}",
                         'annotations': "com.android.support:support-annotations:${versions.supportLibrary}"
                 ],
-                'gson'                 : 'com.google.code.gson:gson:2.8.2',
+                'gson'                 : 'com.google.code.gson:gson:2.8.4',
                 'butterknife'          : 'com.jakewharton:butterknife:8.6.0',
                 'butterknifeAnnotation': 'com.jakewharton:butterknife-compiler:8.6.0'
         ]

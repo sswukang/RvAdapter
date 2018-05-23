@@ -1,8 +1,9 @@
-package cn.sswukang.library.common.itemtouch;
+package cn.sswukang.library.adapter.itemtouch;
 
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,11 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
-import cn.sswukang.library.common.base.BaseAdapter;
+import cn.sswukang.library.adapter.base.BaseAdapter;
 
 
 /**
- * ItemTouch Adapter
+ * 拖拽侧滑Adapter
  *
  * @author sswukang on 2017/2/20 15:36
  * @version 1.0
@@ -30,13 +31,14 @@ public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHo
     }
 
     /**
-     * @return 设置item总个数（不允许设置无限轮播）
+     * 设置item总个数（不允许设置无限轮播）
      */
     @Override
     public final int getItemCount() {
         return super.getItemCount();
     }
 
+    // 创建hold
     @NonNull
     @Override
     public final ItemTouchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -78,7 +80,7 @@ public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHo
      * @param position 当前item的position
      * @param t        position 对应的对象
      */
-    public void onItemClick(View itemView, int position, T t) {
+    public void onItemClick(View itemView, int position, @Nullable T t) {
         // do something...
     }
 
@@ -90,7 +92,7 @@ public abstract class ItemTouchAdapter<T> extends BaseAdapter<T, ItemTouchViewHo
      * @param t        position 对应的对象
      * @return 长按事件是否被消费
      */
-    public boolean onItemLongClick(View itemView, int position, T t) {
+    public boolean onItemLongClick(View itemView, int position, @Nullable T t) {
         return false;
     }
 

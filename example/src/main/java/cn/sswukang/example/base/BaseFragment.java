@@ -17,7 +17,7 @@ import butterknife.Unbinder;
  * @author sswukang on 2017/2/22 15:30
  * @version 1.0
  */
-public abstract class BaseFragment<T extends BaseActivity> extends Fragment {
+public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
 
     /**
      * @return 设置视图id
@@ -59,7 +59,7 @@ public abstract class BaseFragment<T extends BaseActivity> extends Fragment {
     }
 
     @SuppressWarnings("unchecked")
-    protected T getCreatorActivity() {
-        return (T) getActivity();
+    protected A getCreatorActivity() {
+        return (A) getActivity();
     }
 }

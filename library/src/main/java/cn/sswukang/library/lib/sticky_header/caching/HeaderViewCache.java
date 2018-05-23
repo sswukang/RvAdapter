@@ -13,13 +13,13 @@ import cn.sswukang.library.lib.sticky_header.util.OrientationProvider;
 /**
  * An implementation of {@link HeaderProvider} that creates and caches header views
  */
-public class HeaderViewCache implements HeaderProvider {
+public class HeaderViewCache<VH extends RecyclerView.ViewHolder> implements HeaderProvider {
 
-    private final StickyRecyclerHeadersAdapter mAdapter;
+    private final StickyRecyclerHeadersAdapter<VH> mAdapter;
     private final LongSparseArray<View> mHeaderViews = new LongSparseArray<>();
     private final OrientationProvider mOrientationProvider;
 
-    public HeaderViewCache(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider) {
+    public HeaderViewCache(StickyRecyclerHeadersAdapter<VH> adapter, OrientationProvider orientationProvider) {
         mAdapter = adapter;
         mOrientationProvider = orientationProvider;
     }
@@ -30,7 +30,7 @@ public class HeaderViewCache implements HeaderProvider {
 
         View header = mHeaderViews.get(headerId);
         if (header == null) {
-            RecyclerView.ViewHolder viewHolder = mAdapter.onCreateHeaderViewHolder(parent);
+            VH viewHolder = mAdapter.onCreateHeaderViewHolder(parent);
             mAdapter.onBindHeaderViewHolder(viewHolder, position);
             header = viewHolder.itemView;
             if (header.getLayoutParams() == null) {
