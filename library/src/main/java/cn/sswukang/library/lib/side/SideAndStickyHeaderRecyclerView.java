@@ -62,7 +62,8 @@ public class SideAndStickyHeaderRecyclerView extends FrameLayout {
     }
 
     public SideAndStickyHeaderRecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -90,11 +91,11 @@ public class SideAndStickyHeaderRecyclerView extends FrameLayout {
      *
      * @param adapter {@link StickyHeaderAdapter}
      */
-    public void setStickyHeaderAdapter(final StickyHeaderAdapter adapter) {
+    public <VH> void setStickyHeaderAdapter(final StickyHeaderAdapter<VH> adapter) {
         if (linearLayoutManager == null)
             linearLayoutManager = new LinearLayoutManager(getContext());
         if (decoration == null)
-            decoration = new StickyRecyclerHeadersDecoration<BaseViewHolder>(adapter);
+            decoration = new StickyRecyclerHeadersDecoration<>(adapter);
         if (onScrollListener == null)
             onScrollListener = new RecyclerView.OnScrollListener() {
                 @Override
