@@ -91,7 +91,7 @@ public class SideAndStickyHeaderRecyclerView extends FrameLayout {
      *
      * @param adapter {@link StickyHeaderAdapter}
      */
-    public <VH> void setStickyHeaderAdapter(final StickyHeaderAdapter<VH> adapter) {
+    public <T> void setStickyHeaderAdapter(final StickyHeaderAdapter<T> adapter) {
         if (linearLayoutManager == null)
             linearLayoutManager = new LinearLayoutManager(getContext());
         if (decoration == null)
