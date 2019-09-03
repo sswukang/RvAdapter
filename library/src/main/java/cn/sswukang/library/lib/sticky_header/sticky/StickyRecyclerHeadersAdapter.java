@@ -1,6 +1,6 @@
 package cn.sswukang.library.lib.sticky_header.sticky;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 public interface StickyRecyclerHeadersAdapter<VH extends RecyclerView.ViewHolder> {

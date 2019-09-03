@@ -1,7 +1,7 @@
 package cn.sswukang.library.adapter.single;
 
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
 import android.view.View;
 
 import java.util.List;

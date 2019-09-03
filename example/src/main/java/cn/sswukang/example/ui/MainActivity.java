@@ -2,10 +2,12 @@ package cn.sswukang.example.ui;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.support.v7.view.menu.MenuAdapter;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.widget.ListPopupWindow;
-import android.support.v7.widget.Toolbar;
+
+import androidx.appcompat.view.menu.MenuAdapter;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.widget.ListPopupWindow;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,7 +72,7 @@ public class MainActivity extends BaseActivity {
         menuBuilder.add(R.string.main_sticky).setIcon(R.drawable.ic_main_sticky);
         menuBuilder.add(R.string.main_sticky_side).setIcon(R.drawable.ic_main_sticky_side);
         leftMenuPop = new ListPopupWindow(getContext());
-        leftMenuPop.setAdapter(new MenuAdapter(menuBuilder, getLayoutInflater(), true));
+        leftMenuPop.setAdapter(new MenuAdapter(menuBuilder, getLayoutInflater(), true, R.layout.item_menu));
         leftMenuPop.setWidth(getResources().getDisplayMetrics().widthPixels / 2);
         leftMenuPop.setHeight(ListPopupWindow.WRAP_CONTENT);
         leftMenuPop.setAnchorView(topToolbar);
@@ -90,7 +92,7 @@ public class MainActivity extends BaseActivity {
         menuBuilder.add(R.string.main_desc).setIcon(R.drawable.ic_main_desc);
         menuBuilder.add(R.string.main_shuffle).setIcon(R.drawable.ic_main_shuffle);
         rightMenuPop = new ListPopupWindow(getContext());
-        rightMenuPop.setAdapter(new MenuAdapter(menuBuilder, getLayoutInflater(), true));
+        rightMenuPop.setAdapter(new MenuAdapter(menuBuilder, getLayoutInflater(), true, R.layout.item_menu));
         rightMenuPop.setWidth(getResources().getDisplayMetrics().widthPixels / 2);
         rightMenuPop.setHeight(ListPopupWindow.WRAP_CONTENT);
         rightMenuPop.setAnchorView(topToolbar);

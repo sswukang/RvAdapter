@@ -9,38 +9,12 @@ buildscript {
                 'compileSdk'            : 28, // 编译版本
                 'targetSdk'             : 28, // 目标版本
 
-                'androidPlugin'         : '3.3.0', // Android Gradle版本
-                'buildTools'            : '28.0.3', // 编译工具版本
-                'supportLibrary'        : '28.0.0', // Android Support包版本
+                'androidPlugin'         : '3.5.0', // Android Gradle版本
 
                 'majorNumber'           : 2, // 大版本号
-                'minorNumber'           : 4, // 小版本号
+                'minorNumber'           : 5, // 小版本号
                 'revisionNumberCMD'     : 'git rev-list HEAD --count', // 提交次数命令
                 'revisionDescriptionCMD': 'git describe --always', // 提交记录命令
-        ]
-
-        deps = [
-                test                   : [
-                        'junit': "junit:junit:4.12"
-                ],
-                android                : [
-                        'gradlePlugin'            : "com.android.tools.build:gradle:${versions.androidPlugin}",
-                        'gradleBintrayPlugin'     : 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3',
-                        'androidMavenGradlePlugin': 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-                ],
-                'support'              : [
-                        'test'       : [
-                                'runner'               : 'com.android.support.test:runner:1.0.2',
-                                'espresso'             : "com.android.support.test.espresso:espresso-core:3.0.2",
-                                'instrumentationRunner': "android.support.test.runner.AndroidJUnitRunner"
-                        ],
-                        'appcompat'  : "com.android.support:support-compat:${versions.supportLibrary}",
-                        'design'     : "com.android.support:design:${versions.supportLibrary}",
-                        'annotations': "com.android.support:support-annotations:${versions.supportLibrary}"
-                ],
-                'gson'                 : 'com.google.code.gson:gson:2.8.5',
-                'butterknife'          : 'com.jakewharton:butterknife:8.6.0',
-                'butterknifeAnnotation': 'com.jakewharton:butterknife-compiler:8.6.0'
         ]
 
         // 获取 git 提交次数
@@ -66,9 +40,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath deps.android.gradlePlugin
-        classpath deps.android.gradleBintrayPlugin
-        classpath deps.android.androidMavenGradlePlugin
+        classpath "com.android.tools.build:gradle:${versions.androidPlugin}"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

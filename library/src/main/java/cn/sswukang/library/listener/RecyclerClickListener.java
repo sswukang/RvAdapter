@@ -1,6 +1,6 @@
 package cn.sswukang.library.listener;
 
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 import android.view.View;
 
 /**

@@ -4,13 +4,12 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
     defaultConfig {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionCode verCode
         versionName verName
-        testInstrumentationRunner deps.support.test.instrumentationRunner
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -25,10 +24,7 @@ android {
 }
 
 dependencies {
-    testImplementation deps.test.junit
-    androidTestImplementation deps.support.test.runner
-    androidTestImplementation deps.support.test.espresso
-    implementation deps.support.design
+    implementation 'com.google.android.material:material:1.0.0'
 }
 
 def siteUrl = 'https://github.com/sswukang/RvAdapter'  // 项目的主页
@@ -97,7 +93,7 @@ tasks.withType(JavaCompile) {
     options.encoding = "GBK"
 }
 
-task findConventions << {
+task findConventions {
     println project.getConvention()
 }
 
